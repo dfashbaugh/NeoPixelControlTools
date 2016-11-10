@@ -7,8 +7,8 @@ ret, frame = cap.read()
 # Our operations on the frame come here
 grayFirst = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-minContourSize = 500
-maxContourSize = 2000
+minContourSize = 1000
+maxContourSize = 2200
 
 while(True):
 
@@ -18,8 +18,12 @@ while(True):
 
     # Our operations on the frame come here
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    b,g,r = cv2.split(frame)
 
-    ret,thresh1 = cv2.threshold(gray,240,255,cv2.THRESH_BINARY)
+    ret,thresh1 = cv2.threshold(g,250,255,cv2.THRESH_BINARY)
+
+
+
 
     gray = gray - grayFirst
 
@@ -30,18 +34,33 @@ while(True):
     finalContours = []
     for x in range(0, len(contours)) :
     	cnt = contours[x]
-    	if cv2.contourArea(cnt) > minContourSize :
+    	if cv2.contourArea(cnt) > minContourSize and cv2.contourArea(cnt) < maxContourSize :
     		finalContours.append(cnt)
     		count = count + 1
 
     x = 0
     y = 0
+    w = 0
+    h = 0
     if len(finalContours) > 0 :
-    	x,y,w,h = cv2.boundingRect(finalContours[0])
-
-	print 'Contours: ' + str(count) + ' X: ' + str(x) + ' Y: ' + str(y)
+    	tX = 0
+    	tY = 0
+    	tX,tY,w,h = cv2.boundingRect(cnt)
+    	if abs(w-h) < 2 :
+	    	(x,y),radius = cv2.minEnclosingCircle(finalContours[0])
+	    	center = (int(x),int(y))
+	    	radius = int(radius)
+	    	cv2.circle(frame,center,radius,(0,0,255),2)
+	    	print 'Contours: ' + str(count) + ' X: ' + str(x) + ' Y: ' + str(y) + ' W: ' + str(w) + ' H: ' + str(h) + ' Area: ' + str(cv2.contourArea(finalContours[0]))
 
 	cv2.drawContours(frame, finalContours, -1, (0,255,0), 3)
+
+
+
+
+
+
+
 
 
     #cv2.drawContours(thresh1, contours, -1, 255, 3)
@@ -56,7 +75,10 @@ while(True):
 	#im_with_keypoints = cv2.drawKeypoints(im, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
     # Display the resulting frame
-    cv2.imshow('frame',frame)
+    #cv2.namedWindow('frame', cv2.WINDOW_NORMAL)
+    
+    small = cv2.resize(frame, (0,0), fx=0.5, fy=0.5) 
+    cv2.imshow('frame',small)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
