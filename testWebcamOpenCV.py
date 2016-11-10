@@ -146,7 +146,26 @@ writeFile.close()
 
 
 # TIME FOR POST PROCESSING
+minX = 999999999
+minY = 999999999
+maxX = 0
+maxY = 0
 
+for i in range(0, len(posList)) :
+	curX = posList[i][1]
+	curY = posList[i][2]
+
+	if curX > maxX :
+		maxX = curX
+	if curX < minX :
+		minX = curX
+	if curY > maxY :
+		maxY = curY
+	if curY < minY :
+		minY = curY
+
+
+print 'MinX: ' + str(minX) + ' MaxX: ' + str(maxX) + ' MinY: ' + str(minY) + ' MaxY: ' + str(maxY)
 
 
 
