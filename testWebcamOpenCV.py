@@ -2,7 +2,9 @@ import numpy as np
 import cv2
 import time
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(2)
+cap.set(21, 0)
+
 ret, frame = cap.read()
 # Our operations on the frame come here
 grayFirst = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -24,7 +26,7 @@ while(True):
     #g = cv2.subtract(g, b)
     
     #ret,thresh1 = cv2.threshold(g,200,255,cv2.THRESH_BINARY)
-    ret,thresh1 = cv2.threshold(gray,200,255,cv2.THRESH_BINARY)
+    ret,thresh1 = cv2.threshold(g,250,255,cv2.THRESH_BINARY)
 
 
 
