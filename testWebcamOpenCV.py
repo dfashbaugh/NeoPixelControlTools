@@ -7,8 +7,8 @@ ret, frame = cap.read()
 # Our operations on the frame come here
 grayFirst = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-minContourSize = 1000
-maxContourSize = 2200
+minContourSize = 200
+maxContourSize = 4000
 
 while(True):
 
@@ -20,12 +20,15 @@ while(True):
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     b,g,r = cv2.split(frame)
 
-    ret,thresh1 = cv2.threshold(g,250,255,cv2.THRESH_BINARY)
+    #g = cv2.subtract(g,r)
+    #g = cv2.subtract(g, b)
+    
+    #ret,thresh1 = cv2.threshold(g,200,255,cv2.THRESH_BINARY)
+    ret,thresh1 = cv2.threshold(gray,200,255,cv2.THRESH_BINARY)
 
 
 
-
-    gray = gray - grayFirst
+    #gray = gray - grayFirst
 
     im2, contours, hierarchy = cv2.findContours(thresh1,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
     #print contours
@@ -46,7 +49,7 @@ while(True):
     	tX = 0
     	tY = 0
     	tX,tY,w,h = cv2.boundingRect(cnt)
-    	if abs(w-h) < 2 :
+    	if abs(w-h) < 200 :
 	    	(x,y),radius = cv2.minEnclosingCircle(finalContours[0])
 	    	center = (int(x),int(y))
 	    	radius = int(radius)
