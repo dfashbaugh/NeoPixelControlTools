@@ -9,8 +9,8 @@ ret, frame = cap.read()
 # Our operations on the frame come here
 grayFirst = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-minContourSize = 200
-maxContourSize = 4000
+minContourSize = 50
+maxContourSize = 300
 
 while(True):
 
@@ -26,7 +26,7 @@ while(True):
     #g = cv2.subtract(g, b)
     
     #ret,thresh1 = cv2.threshold(g,200,255,cv2.THRESH_BINARY)
-    ret,thresh1 = cv2.threshold(g,250,255,cv2.THRESH_BINARY)
+    ret,thresh1 = cv2.threshold(r,250,255,cv2.THRESH_BINARY)
 
 
 
@@ -82,7 +82,7 @@ while(True):
     # Display the resulting frame
     #cv2.namedWindow('frame', cv2.WINDOW_NORMAL)
     
-    small = cv2.resize(r, (0,0), fx=0.5, fy=0.5) 
+    small = cv2.resize(frame, (0,0), fx=0.5, fy=0.5) 
     cv2.imshow('frame',small)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
