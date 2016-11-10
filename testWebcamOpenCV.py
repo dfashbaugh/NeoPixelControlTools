@@ -82,7 +82,7 @@ while(True):
     # Display the resulting frame
     #cv2.namedWindow('frame', cv2.WINDOW_NORMAL)
     
-    small = cv2.resize(frame, (0,0), fx=0.5, fy=0.5) 
+    small = cv2.resize(r, (0,0), fx=0.5, fy=0.5) 
     cv2.imshow('frame',small)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
