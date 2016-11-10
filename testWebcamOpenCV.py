@@ -3,7 +3,7 @@ import cv2
 import serial # if you have not already done so
 from time import sleep
 
-ser = serial.Serial('/dev/tty.usbmodem2026371', 9600)
+ser = serial.Serial('/dev/tty.usbmodem2062411', 9600)
 # while 1 :
 	# for x in range(0, 85) :
 	# 	ser.write(str(x).encode())
@@ -17,18 +17,18 @@ ret, frame = cap.read()
 # Our operations on the frame come here
 grayFirst = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-minContourSize = 10
+minContourSize = 1
 maxContourSize = 300
 
 posList = []
 
-for i in range(0, 85) :
+for i in range(0, 240) :
 
     ser.write(str(i).encode())
     sleep(0.2)
 
     tempList = []
-    for j in range(0, 1) :
+    for j in range(0, 5) :
 
 	    ret, frame = cap.read()
 
@@ -95,34 +95,37 @@ for i in range(0, 85) :
 	        break
 
 	# Process Temp List
-    rangeX = 0
-    rangeY = 0
-    minX = 99999999999
-    minY = 99999999999
-    maxX = 0
-    maxY = 0
-    sumX = 0
-    sumY = 0
-    for j in range(0, len(tempList)) :
-    	if tempList[j][1] > maxX :
-    		maxX = tempList[j][1]
-    	if tempList[j][1] < minX :
-    		minX = tempList[j][1]
-    	if tempList[j][2] > maxY :
-    		maxY = tempList[j][2]
-    	if tempList[j][2] < minY :
-    		minY = tempList[j][2]
-    	sumX = sumX + tempList[j][1]
-    	sumY = sumY	+ tempList[j][2]
+    try :
+	    rangeX = 0
+	    rangeY = 0
+	    minX = 99999999999
+	    minY = 99999999999
+	    maxX = 0
+	    maxY = 0
+	    sumX = 0
+	    sumY = 0
+	    for j in range(0, len(tempList)) :
+	    	if tempList[j][1] > maxX :
+	    		maxX = tempList[j][1]
+	    	if tempList[j][1] < minX :
+	    		minX = tempList[j][1]
+	    	if tempList[j][2] > maxY :
+	    		maxY = tempList[j][2]
+	    	if tempList[j][2] < minY :
+	    		minY = tempList[j][2]
+	    	sumX = sumX + tempList[j][1]
+	    	sumY = sumY	+ tempList[j][2]
 
-    averageX = sumX / len(tempList)
-    averageY = sumY / len(tempList)
-    rangeX = maxX - minX
-    rangeY = maxY - minY
+	    averageX = sumX / len(tempList)
+	    averageY = sumY / len(tempList)
+	    rangeX = maxX - minX
+	    rangeY = maxY - minY
 
-    print 'Average X: ' + str(averageX) + ', AverageY: ' + str(averageY) + ', Range X: ' + str(rangeX) + ', Range Y: ' + str(rangeY)
+	    print 'Average X: ' + str(averageX) + ', AverageY: ' + str(averageY) + ', Range X: ' + str(rangeX) + ', Range Y: ' + str(rangeY)
 
-    posList.append( (i, averageX, averageY) )
+	    posList.append( (i, averageX, averageY) )
+    except :
+		print 'Failed to find LED'
 
 
 # When everything done, release the capture
