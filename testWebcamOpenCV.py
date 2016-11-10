@@ -1,6 +1,14 @@
 import numpy as np
 import cv2
-import time
+import serial # if you have not already done so
+from time import sleep
+
+ser = serial.Serial('/dev/tty.usbmodem2026371', 9600)
+# while 1 :
+	# for x in range(0, 85) :
+	# 	ser.write(str(x).encode())
+	# 	sleep(1)
+	# 	ser.flush()
 
 cap = cv2.VideoCapture(2)
 cap.set(21, 0)
@@ -9,13 +17,15 @@ ret, frame = cap.read()
 # Our operations on the frame come here
 grayFirst = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-minContourSize = 50
+minContourSize = 10
 maxContourSize = 300
 
-while(True):
+posList = []
 
-    # Capture frame-by-frame
-    #time.sleep(1)
+for i in range(0, 85) :
+
+    ser.write(str(i).encode())
+
     ret, frame = cap.read()
 
     # Our operations on the frame come here
@@ -57,6 +67,7 @@ while(True):
 	    	radius = int(radius)
 	    	cv2.circle(frame,center,radius,(0,0,255),2)
 	    	print 'Contours: ' + str(count) + ' X: ' + str(x) + ' Y: ' + str(y) + ' W: ' + str(w) + ' H: ' + str(h) + ' Area: ' + str(cv2.contourArea(finalContours[0]))
+	    	posList.append( (i, x, y) )
 
 	cv2.drawContours(frame, finalContours, -1, (0,255,0), 3)
 
@@ -88,7 +99,26 @@ while(True):
         break
 
 
-
 # When everything done, release the capture
 cap.release()
 cv2.destroyAllWindows()
+
+writeFile = open('LEDpositions.csv', 'w')
+
+for x in range(0, len(posList) ) :
+     writeFile.write(str(posList[x][0]))
+     writeFile.write('	')
+     writeFile.write(str(posList[x][1]))
+     writeFile.write('	')
+     writeFile.write(str(posList[x][2]))
+     writeFile.write('\n')
+
+writeFile.close()
+
+
+# TIME FOR POST PROCESSING
+
+
+
+
+
