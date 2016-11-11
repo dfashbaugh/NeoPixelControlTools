@@ -45,7 +45,9 @@ def GetLEDsInBox(xLow, xHigh, yLow, yHigh, posList) :
 def BinLEDsByPercentage(posList, percentBin, maxX, maxY) :
 	newX = maxX * percentBin
 	newY = maxY * percentBin
-	BinLEDsToNewXY(posList, newX, newY, maxX, maxY)
+	newX = int(round(newX))
+	newY = int(round(newY))
+	return BinLEDsToNewXY(posList, newX, newY, maxX, maxY)
 
 def BinLEDsToNewXY(posList, newX, newY, maxX, maxY) :
 	xFraction = maxX / newX
@@ -98,8 +100,8 @@ def PrintArduinoCode(XYMatrix) :
 captureVideo = 0
 fileName = 'LEDpositions.csv'
 
-binByPercentage = 0 #Keep aspect ratio
-percentBin = 0.5
+binByPercentage = 1 #Keep aspect ratio
+percentBin = 0.1
 newX = 20  # X and Y size of the array that the pixels will be held in
 newY = 20  
 
@@ -290,10 +292,11 @@ for x in range(0, len(posList)) :
 	adjustedPosList.append( (posList[x][0], curX, curY) )
 
 if binByPercentage :
-	BinLEDsByPercentage(adjustedPosList, percentBin, maxX, maxY)
+	XYMatrix = BinLEDsByPercentage(adjustedPosList, percentBin, maxX, maxY)
 else :
 	XYMatrix = BinLEDsToNewXY(adjustedPosList, newX, newY, maxX, maxY)
-	PrintArduinoCode(XYMatrix)
+
+PrintArduinoCode(XYMatrix)
 
 
 
