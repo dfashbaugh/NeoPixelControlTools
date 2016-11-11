@@ -3,7 +3,8 @@ import cv2
 import serial # if you have not already done so
 from time import sleep
 
-captureVideo = 1
+captureVideo = 0
+fileName = 'LEDpositions.csv'
 
 if captureVideo :
 
@@ -136,7 +137,7 @@ if captureVideo :
 	cap.release()
 	cv2.destroyAllWindows()
 
-	writeFile = open('LEDpositions.csv', 'w')
+	writeFile = open(fileName, 'w')
 
 	for x in range(0, len(posList) ) :
 	     writeFile.write(str(posList[x][0]))
@@ -150,6 +151,15 @@ if captureVideo :
 
 else :
 	posList = []
+	myFile = open(fileName, 'r')
+	while 1 :
+		curStr = myFile.readline()
+		if len(curStr) > 0 :
+			curStr = curStr.split('	')
+			posList.append( (int(curStr[0]), float(curStr[1]), float(curStr[2])) )
+		else :
+			myFile.close()
+			break
 
 # TIME FOR POST PROCESSING
 minX = 999999999
@@ -177,11 +187,6 @@ maxY = maxY - minY
 minX = 0
 minY = 0
 print 'Adjusted to MinX: ' + str(minX) + ' MaxX: ' + str(maxX) + ' MinY: ' + str(minY) + ' MaxY: ' + str(maxY)
-
-for i in range(0, len(posList)) :
-	posList[i][1] = posList[i][1] - minX
-	posList[i][2] = posList[i][2] - minY
-
 
 
 
