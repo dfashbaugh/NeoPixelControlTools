@@ -17,6 +17,17 @@ def PrintXYMatrix(XYMatrix) :
 			else :
 				printStr = printStr + ' 	'
 
+def PrintXYMatrixSmall(XYMatrix) :
+	printStr = ''
+	for y in range(0, len(XYMatrix[0])) :
+		print printStr
+		printStr = ''
+		for x in range(0, len(XYMatrix)) :
+			if len(XYMatrix[x][y]) > 0 :
+				printStr = printStr + 'x'
+			else :
+				printStr = printStr + ' '
+
 def GetLEDsInBox(xLow, xHigh, yLow, yHigh, posList) :
 	LEDAddrs = []
 
@@ -44,6 +55,7 @@ def BinLEDsToNewXY(posList, newX, newY, maxX, maxY) :
 		eachX = []
 
 	PrintXYMatrix(XYMatrix)
+	PrintXYMatrixSmall(XYMatrix)
 
 	return XYMatrix
 
@@ -62,7 +74,7 @@ def PrintArduinoCode(XYMatrix) :
 	XLength = len(XYMatrix)
 	YLength = len(XYMatrix[0])
 
-	writeFile = open('MatrixMapping.cpp', 'w')
+	writeFile = open('MatrixMapping.h', 'w')
 	writeFile.write('int xSize = ' + str(XLength) + ';\n')
 	writeFile.write('int ySize = ' + str(YLength) + ';\n')
 	writeFile.write('int maxLEDList = ' + str(LEDLength) + ';\n')
@@ -82,7 +94,7 @@ captureVideo = 0
 fileName = 'LEDpositions.csv'
 
 binByPercentage = 0 #Keep aspect ratio
-newX = 20  # X and Y size of the array that the pixels will be held in
+newX = 30  # X and Y size of the array that the pixels will be held in
 newY = 30  
 
 if captureVideo :
