@@ -3,8 +3,56 @@ import cv2
 import serial # if you have not already done so
 from time import sleep
 
+def PrintXYMatrix(XYMatrix) :
+	print 'Start Print'
+	print str(len(XYMatrix))
+	print str(len(XYMatrix[0]))
+	printStr = ''
+	for y in range(0, len(XYMatrix[0])) :
+		print printStr
+		printStr = ''
+		for x in range(0, len(XYMatrix)) :
+			if len(XYMatrix[x][y]) > 0 :
+				printStr = printStr + str(XYMatrix[x][y][0]) + '	'
+			else :
+				printStr = printStr + 'N	'
+
+def GetLEDsInBox(xLow, xHigh, yLow, yHigh, posList) :
+	LEDAddrs = []
+
+	for x in range(0, len(posList)) :
+		curX = posList[x][1]
+		curY = posList[x][2]
+		led = posList[x][0]
+
+		if curX < xHigh and curX > xLow and curY < yHigh and curY > yLow :
+			print led
+			LEDAddrs.append(led)
+
+	return LEDAddrs
+
+def BinLEDsToNewXY(posList, newX, newY, maxX, maxY) :
+	xFraction = maxX / newX
+	yFraction = maxY / newY
+	eachX = []
+	XYMatrix = []
+
+	for y in range(0, newY) :
+		for x in range(0, newX) :
+			eachX.append(GetLEDsInBox(x*xFraction, (x+1)*xFraction, y*yFraction, (y+1)*yFraction, posList))
+		XYMatrix.append(eachX)
+		eachX = []
+
+	PrintXYMatrix(XYMatrix)
+
+	return XYMatrix
+
 captureVideo = 0
 fileName = 'LEDpositions.csv'
+
+binByPercentage = 0 #Keep aspect ratio
+newX = 20  # X and Y size of the array that the pixels will be held in
+newY = 30  
 
 if captureVideo :
 
@@ -184,9 +232,18 @@ for i in range(0, len(posList)) :
 print 'MinX: ' + str(minX) + ' MaxX: ' + str(maxX) + ' MinY: ' + str(minY) + ' MaxY: ' + str(maxY)
 maxX = maxX - minX
 maxY = maxY - minY
-minX = 0
-minY = 0
 print 'Adjusted to MinX: ' + str(minX) + ' MaxX: ' + str(maxX) + ' MinY: ' + str(minY) + ' MaxY: ' + str(maxY)
+
+adjustedPosList = []
+for x in range(0, len(posList)) :
+	curX = posList[x][1] - minX
+	curY = posList[x][2] - minY
+	adjustedPosList.append( (posList[x][0], curX, curY) )
+
+if binByPercentage :
+	pass
+else :
+	BinLEDsToNewXY(adjustedPosList, newX, newY, maxX, maxY)
 
 
 
