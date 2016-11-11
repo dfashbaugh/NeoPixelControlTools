@@ -15,7 +15,7 @@ def PrintXYMatrix(XYMatrix) :
 			if len(XYMatrix[x][y]) > 0 :
 				printStr = printStr + str(XYMatrix[x][y][0]) + '	'
 			else :
-				printStr = printStr + 'N	'
+				printStr = printStr + ' 	'
 
 def GetLEDsInBox(xLow, xHigh, yLow, yHigh, posList) :
 	LEDAddrs = []
@@ -46,6 +46,37 @@ def BinLEDsToNewXY(posList, newX, newY, maxX, maxY) :
 	PrintXYMatrix(XYMatrix)
 
 	return XYMatrix
+
+def GetLongestLEDList(XYMatrix) :
+	longestLEDList = 0
+
+	for y in range(0, len(XYMatrix[0])) :
+		for x in range(0, len(XYMatrix)) :
+			if len(XYMatrix[x][y]) > longestLEDList :
+				longestLEDList = len(XYMatrix[x][y])
+
+	return longestLEDList
+
+def PrintArduinoCode(XYMatrix) :
+	LEDLength = GetLongestLEDList(XYMatrix)
+	XLength = len(XYMatrix)
+	YLength = len(XYMatrix[0])
+
+	writeFile = open('MatrixMapping.cpp', 'w')
+	writeFile.write('int xSize = ' + str(XLength) + ';\n')
+	writeFile.write('int ySize = ' + str(YLength) + ';\n')
+	writeFile.write('int maxLEDList = ' + str(LEDLength) + ';\n')
+	writeFile.write('int LEDMap[' +str(XLength) + '][' + str(YLength) + '][' + str(LEDLength) + '];\n')
+
+	for y in range(0, YLength) :
+		for x in range(0, XLength) :
+			for l in range(0, LEDLength) :
+				if len(XYMatrix[x][y]) <= l :
+					writeFile.write('LEDMap[' + str(x) + '][' + str(y) + '][' + str(l) + '] = ' + '-1' + ';\n')
+				else :
+					writeFile.write('LEDMap[' + str(x) + '][' + str(y) + '][' + str(l) + '] = ' + str(XYMatrix[x][y][l]) + ';\n')
+
+	writeFile.close()
 
 captureVideo = 0
 fileName = 'LEDpositions.csv'
@@ -243,7 +274,8 @@ for x in range(0, len(posList)) :
 if binByPercentage :
 	pass
 else :
-	BinLEDsToNewXY(adjustedPosList, newX, newY, maxX, maxY)
+	XYMatrix = BinLEDsToNewXY(adjustedPosList, newX, newY, maxX, maxY)
+	PrintArduinoCode(XYMatrix)
 
 
 
