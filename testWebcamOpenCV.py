@@ -24,9 +24,9 @@ def PrintXYMatrixSmall(XYMatrix) :
 		printStr = ''
 		for x in range(0, len(XYMatrix)) :
 			if len(XYMatrix[x][y]) > 0 :
-				printStr = printStr + 'x'
+				printStr = printStr + 'x '
 			else :
-				printStr = printStr + ' '
+				printStr = printStr + '  '
 
 def GetLEDsInBox(xLow, xHigh, yLow, yHigh, posList) :
 	LEDAddrs = []
@@ -94,8 +94,8 @@ captureVideo = 0
 fileName = 'LEDpositions.csv'
 
 binByPercentage = 0 #Keep aspect ratio
-newX = 30  # X and Y size of the array that the pixels will be held in
-newY = 30  
+newX = 20  # X and Y size of the array that the pixels will be held in
+newY = 20  
 
 if captureVideo :
 
