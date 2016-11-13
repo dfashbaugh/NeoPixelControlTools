@@ -14,6 +14,7 @@ public:
 	int GetMatrixXSize() {return xSize; };
 
 	int GetValueAt(int x, int y) {return Canvas[x][y]; };
+	void SetPixelAt(int x, int y, int value) {Canvas[x][y] = value; };
 
 private:
 

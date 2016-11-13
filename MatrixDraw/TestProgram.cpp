@@ -62,11 +62,27 @@ void TestConstructor()
 	CheckResults(testName, valueList, 2);
 }
 
+void TestCanvasAccessor()
+{
+	std::string testName = "Canvas Accessor";
+
+	MatrixDraw draw(10,20);
+	draw.SetPixelAt(5,10, 0xFFA0E1);
+
+	ExpectedValue valueList [1];
+	valueList[0].valueName = "Value at 5,10";
+	valueList[0].expectedValue = 0xFFA0E1;
+	valueList[0].actualValue = draw.GetValueAt(5, 10);
+
+	CheckResults(testName, valueList, 1);
+}
+
 int main(void)
 {
 	cout << "Test Beginning" << endl;
 
 	TestConstructor();
+	TestCanvasAccessor();
 
 	return 0;
 }
