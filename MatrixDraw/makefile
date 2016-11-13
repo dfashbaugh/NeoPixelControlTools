@@ -1,2 +1,2 @@
-instrMake: TestProgram.cpp
-	g++ TestProgram.cpp -o DrawTest.app
+instrMake: TestProgram.cpp MatrixDraw.cpp
+	g++ TestProgram.cpp MatrixDraw.cpp -o DrawTest.app
