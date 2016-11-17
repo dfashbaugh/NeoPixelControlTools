@@ -63,6 +63,23 @@ void DrawMatrix(MatrixDraw &draw)
 	}
 }
 
+void TestFillCircle()
+{
+	std::string testName = "Fill Circle";
+
+	MatrixDraw draw(20, 20);
+	draw.DrawCircle(8,10, 10, 1);
+	draw.Fill(12, 11, 1);
+	DrawMatrix(draw);
+
+	ExpectedValue valueList [1];
+	valueList[0].valueName = "Not Circle Edge";
+	valueList[0].expectedValue = 1;
+	valueList[0].actualValue = draw.GetValueAt(7, 8);
+
+	CheckResults(testName, valueList, 1);
+}
+
 void TestCircleDraw()
 {
 	std::string testName = "Circle Draw";
@@ -174,6 +191,7 @@ int main(void)
 	TestClearMatrix();
 	TestLineDraw();
 	TestCircleDraw();
+	TestFillCircle();
 
 	return 0;
 }
