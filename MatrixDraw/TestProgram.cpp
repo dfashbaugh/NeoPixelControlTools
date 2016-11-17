@@ -63,6 +63,26 @@ void DrawMatrix(MatrixDraw &draw)
 	}
 }
 
+void TestCircleDraw()
+{
+	std::string testName = "Circle Draw";
+
+	MatrixDraw draw(20, 20);
+	draw.DrawCircle(8,10, 10, 1);
+	DrawMatrix(draw);
+
+	// ExpectedValue valueList [2];
+	// valueList[0].valueName = "Start XY Position";
+	// valueList[0].expectedValue = 1;
+	// valueList[0].actualValue = draw.GetValueAt(5, 2);
+
+	// valueList[1].valueName = "End XY Position";
+	// valueList[1].expectedValue = 1;
+	// valueList[1].actualValue = draw.GetValueAt(19, 15);
+
+	// CheckResults(testName, valueList, 2);
+}
+
 void TestLineDraw()
 {
 	std::string testName = "Line Draw";
@@ -145,6 +165,7 @@ int main(void)
 	TestCanvasAccessor();
 	TestClearMatrix();
 	TestLineDraw();
+	TestCircleDraw();
 
 	return 0;
 }
