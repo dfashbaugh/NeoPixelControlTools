@@ -77,12 +77,34 @@ void TestCanvasAccessor()
 	CheckResults(testName, valueList, 1);
 }
 
+void TestClearMatrix()
+{
+	std::string testName = "Clear Matrix Test";
+
+	MatrixDraw draw(10,20);
+	draw.SetPixelAt(5,10, 0xFFA0E1);
+
+	ExpectedValue valueList [2];
+	valueList[0].valueName = "Value at 5,10 Before Clear";
+	valueList[0].expectedValue = 0xFFA0E1;
+	valueList[0].actualValue = draw.GetValueAt(5, 10);
+
+	draw.ClearMatrix();
+
+	valueList[1].valueName = "Value at 5,10 After Clear";
+	valueList[1].expectedValue = 0;
+	valueList[1].actualValue = draw.GetValueAt(5, 10);
+
+	CheckResults(testName, valueList, 2);
+}
+
 int main(void)
 {
 	cout << "Test Beginning" << endl;
 
 	TestConstructor();
 	TestCanvasAccessor();
+	TestClearMatrix();
 
 	return 0;
 }

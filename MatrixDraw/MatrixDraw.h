@@ -19,10 +19,11 @@ public:
 	void DrawLine(int x1, int y1, int x2, int y2, int color);
 	void DrawCircle(int r, int cX, int cY, int color);
 
+	void ClearMatrix();
 private:
 
 	int xSize;
 	int ySize;
-	int Canvas[MaxX][MaxY];
+	int **Canvas;
 
 };
