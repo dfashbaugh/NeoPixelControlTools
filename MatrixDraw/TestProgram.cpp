@@ -44,6 +44,25 @@ void CheckResults(std::string testName, ExpectedValue valueList [], int numberOf
 	OnSuccess(testName);
 }
 
+void DrawMatrix(MatrixDraw &draw)
+{
+	for(int y = 0; y < draw.GetMatrixYSize(); y++)
+	{
+		for(int x = 0; x < draw.GetMatrixXSize(); x++)
+		{
+			if(draw.GetValueAt(x,y) > 0)
+			{
+				cout << " x";
+			}
+			else
+			{
+				cout << "  ";
+			}
+		}
+		cout << endl;
+	}
+}
+
 void TestConstructor()
 {
 	std::string testName = "Matrix Constructor";
