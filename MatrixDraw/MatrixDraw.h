@@ -1,6 +1,3 @@
-#define MaxX 32
-#define MaxY 32
-
 class MatrixDraw {
 public:
 
