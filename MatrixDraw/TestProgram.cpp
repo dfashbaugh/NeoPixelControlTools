@@ -44,6 +44,73 @@ void CheckResults(std::string testName, ExpectedValue valueList [], int numberOf
 	OnSuccess(testName);
 }
 
+void DrawMatrix(MatrixDraw &draw)
+{
+	for(int y = 0; y < draw.GetMatrixYSize(); y++)
+	{
+		for(int x = 0; x < draw.GetMatrixXSize(); x++)
+		{
+			if(draw.GetValueAt(x,y) > 0)
+			{
+				cout << " x";
+			}
+			else
+			{
+				cout << "  ";
+			}
+		}
+		cout << endl;
+	}
+}
+
+void TestCircleDraw()
+{
+	std::string testName = "Circle Draw";
+
+	MatrixDraw draw(20, 20);
+	draw.DrawCircle(8,10, 10, 1);
+	DrawMatrix(draw);
+
+	ExpectedValue valueList [4];
+	valueList[0].valueName = "Left XY Position";
+	valueList[0].expectedValue = 1;
+	valueList[0].actualValue = draw.GetValueAt(2, 10);
+
+	valueList[1].valueName = "Right XY Position";
+	valueList[1].expectedValue = 1;
+	valueList[1].actualValue = draw.GetValueAt(18, 10);
+
+	valueList[2].valueName = "Up XY Position";
+	valueList[2].expectedValue = 1;
+	valueList[2].actualValue = draw.GetValueAt(10, 2);
+
+	valueList[3].valueName = "Down XY Position";
+	valueList[3].expectedValue = 1;
+	valueList[3].actualValue = draw.GetValueAt(10, 18);
+
+	CheckResults(testName, valueList, 4);
+}
+
+void TestLineDraw()
+{
+	std::string testName = "Line Draw";
+
+	MatrixDraw draw(20, 20);
+	draw.DrawLine(5,2, 19, 15, 1);
+	DrawMatrix(draw);
+
+	ExpectedValue valueList [2];
+	valueList[0].valueName = "Start XY Position";
+	valueList[0].expectedValue = 1;
+	valueList[0].actualValue = draw.GetValueAt(5, 2);
+
+	valueList[1].valueName = "End XY Position";
+	valueList[1].expectedValue = 1;
+	valueList[1].actualValue = draw.GetValueAt(19, 15);
+
+	CheckResults(testName, valueList, 2);
+}
+
 void TestConstructor()
 {
 	std::string testName = "Matrix Constructor";
@@ -105,6 +172,8 @@ int main(void)
 	TestConstructor();
 	TestCanvasAccessor();
 	TestClearMatrix();
+	TestLineDraw();
+	TestCircleDraw();
 
 	return 0;
 }
