@@ -71,16 +71,24 @@ void TestCircleDraw()
 	draw.DrawCircle(8,10, 10, 1);
 	DrawMatrix(draw);
 
-	// ExpectedValue valueList [2];
-	// valueList[0].valueName = "Start XY Position";
-	// valueList[0].expectedValue = 1;
-	// valueList[0].actualValue = draw.GetValueAt(5, 2);
+	ExpectedValue valueList [4];
+	valueList[0].valueName = "Left XY Position";
+	valueList[0].expectedValue = 1;
+	valueList[0].actualValue = draw.GetValueAt(2, 10);
 
-	// valueList[1].valueName = "End XY Position";
-	// valueList[1].expectedValue = 1;
-	// valueList[1].actualValue = draw.GetValueAt(19, 15);
+	valueList[1].valueName = "Right XY Position";
+	valueList[1].expectedValue = 1;
+	valueList[1].actualValue = draw.GetValueAt(18, 10);
 
-	// CheckResults(testName, valueList, 2);
+	valueList[2].valueName = "Up XY Position";
+	valueList[2].expectedValue = 1;
+	valueList[2].actualValue = draw.GetValueAt(10, 2);
+
+	valueList[3].valueName = "Down XY Position";
+	valueList[3].expectedValue = 1;
+	valueList[3].actualValue = draw.GetValueAt(10, 18);
+
+	CheckResults(testName, valueList, 4);
 }
 
 void TestLineDraw()
