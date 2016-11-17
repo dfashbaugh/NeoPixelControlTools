@@ -57,6 +57,31 @@ void MatrixDraw::DrawCircle(int r, int cX, int cY, int color)
     }
 }
 
+void MatrixDraw::FloodFillRecur(int x, int y, int prevC, int newC)
+{
+	    // Base cases
+    if (x < 0 || x >= xSize || y < 0 || y >= ySize)
+        return;
+    if (GetValueAt(x,y) != prevC)
+        return;
+ 
+    // Replace the color at (x, y)
+    SetPixelAt(x,y, newC);
+ 
+    // Recur for north, east, south and west
+    FloodFillRecur(x+1, y, prevC, newC);
+    FloodFillRecur(x-1, y, prevC, newC);
+    FloodFillRecur(x, y+1, prevC, newC);
+    FloodFillRecur(x, y-1, prevC, newC);
+}
+
+
+void MatrixDraw::Fill(int x, int y, int color)
+{
+	int prevC = GetValueAt(x, y);
+	FloodFillRecur(x,y, prevC, color);
+}
+
 void MatrixDraw::ClearMatrix()
 {
 	for(int x = 0; x < xSize; x++)
