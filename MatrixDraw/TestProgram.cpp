@@ -63,6 +63,50 @@ void DrawMatrix(MatrixDraw &draw)
 	}
 }
 
+void TestFloodFillFailureCase()
+{
+	std::string testName = "Test Flood Fill Failure";
+
+	MatrixDraw draw(20, 20);
+	draw.DrawRectangle(8,1, 18, 10, 1);
+	draw.Fill(8, 5, 1);
+
+	ExpectedValue valueList [1];
+	valueList[0].valueName = "Did Not Crash";
+	valueList[0].expectedValue = 1;
+	valueList[0].actualValue = 1;
+
+	CheckResults(testName, valueList, 1);
+}
+
+void TestRectangleDraw()
+{
+	std::string testName = "Rectangle Draw";
+
+	MatrixDraw draw(20, 20);
+	draw.DrawRectangle(8,1, 18, 10, 1);
+	DrawMatrix(draw);
+
+	ExpectedValue valueList [4];
+	valueList[0].valueName = "Left XY Position";
+	valueList[0].expectedValue = 1;
+	valueList[0].actualValue = draw.GetValueAt(8, 5);
+
+	valueList[1].valueName = "Right XY Position";
+	valueList[1].expectedValue = 1;
+	valueList[1].actualValue = draw.GetValueAt(18, 5);
+
+	valueList[2].valueName = "Up XY Position";
+	valueList[2].expectedValue = 1;
+	valueList[2].actualValue = draw.GetValueAt(12, 1);
+
+	valueList[3].valueName = "Down XY Position";
+	valueList[3].expectedValue = 1;
+	valueList[3].actualValue = draw.GetValueAt(14, 10);
+
+	CheckResults(testName, valueList, 4);
+}
+
 void TestFillCircle()
 {
 	std::string testName = "Fill Circle";
@@ -192,6 +236,8 @@ int main(void)
 	TestLineDraw();
 	TestCircleDraw();
 	TestFillCircle();
+	TestRectangleDraw();
+	TestFloodFillFailureCase();
 
 	return 0;
 }
