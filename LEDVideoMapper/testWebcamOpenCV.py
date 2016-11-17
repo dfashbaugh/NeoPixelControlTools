@@ -2,6 +2,8 @@ import numpy as np
 import cv2
 import serial # if you have not already done so
 from time import sleep
+from PIL import Image
+from PIL import ImageDraw
 
 def PrintXYMatrix(XYMatrix) :
 	print 'Start Print'
@@ -27,6 +29,20 @@ def PrintXYMatrixSmall(XYMatrix) :
 				printStr = printStr + 'x '
 			else :
 				printStr = printStr + '  '
+
+def PrintXYMatrixImage(XYMatrix) :
+	matrixDraw = Image.new("RGB", (len(XYMatrix), len(XYMatrix[0])))
+	draw = ImageDraw.Draw(matrixDraw)
+	px = matrixDraw.load()
+	for x in range(0, len(XYMatrix)) :
+		for y in range(0, len(XYMatrix[0])) :
+			if len(XYMatrix[x][y]) > 0 :
+				px[x,y] = (255,0,0)
+			else :
+				px[x,y] = (0,0,0)
+
+	matrixDraw.save('out.bmp')
+			
 
 def GetLEDsInBox(xLow, xHigh, yLow, yHigh, posList) :
 	LEDAddrs = []
@@ -63,6 +79,7 @@ def BinLEDsToNewXY(posList, newX, newY, maxX, maxY) :
 
 	PrintXYMatrix(XYMatrix)
 	PrintXYMatrixSmall(XYMatrix)
+	PrintXYMatrixImage(XYMatrix)
 
 	return XYMatrix
 
@@ -100,7 +117,7 @@ def PrintArduinoCode(XYMatrix) :
 captureVideo = 0
 fileName = 'LEDpositions.csv'
 
-binByPercentage = 0 #Keep aspect ratio
+binByPercentage = 1 #Keep aspect ratio
 percentBin = 0.1
 newX = 10  # X and Y size of the array that the pixels will be held in
 newY = 10  
