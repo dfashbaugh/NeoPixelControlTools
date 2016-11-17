@@ -15,6 +15,7 @@ public:
 
 	void DrawLine(int x1, int y1, int x2, int y2, int color);
 	void DrawCircle(int r, int cX, int cY, int color);
+	void DrawRectangle(int x1, int y1, int x2, int y2, int color);
 	void Fill(int x, int y, int color);
 
 	void ClearMatrix();

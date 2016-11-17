@@ -24,10 +24,22 @@ void MatrixDraw::DrawLine(int x1, int y1, int x2, int y2, int color)
 {
 	int dx = x2 - x1;
 	int dy = y2 - y1;
-	for(int x = x1; x <= x2; x++){
-  		int y = y1 + dy * (x - x1) / dx;
-  		SetPixelAt(x, y, color);
+
+	if(dx == 0)
+	{
+		for(int y = y1; y <= y2; y++){
+		  		int x = x1 + dx * (y - y1) / dy;
+		  		SetPixelAt(x, y, color);
+			}
 	}
+	else
+	{
+		for(int x = x1; x <= x2; x++){
+  			int y = y1 + dy * (x - x1) / dx;
+  			SetPixelAt(x, y, color);
+		}
+	}
+	
 }
 
 void MatrixDraw::DrawCircle(int r, int cX, int cY, int color)
@@ -57,6 +69,14 @@ void MatrixDraw::DrawCircle(int r, int cX, int cY, int color)
     }
 }
 
+void MatrixDraw::DrawRectangle(int x1, int y1, int x2, int y2, int color)
+{
+	DrawLine(x1, y1, x2, y1, color);
+	DrawLine(x1, y2, x2, y2, color);
+	DrawLine(x1, y1, x1, y2, color);
+	DrawLine(x2, y1, x2, y2, color);
+}
+
 void MatrixDraw::FloodFillRecur(int x, int y, int prevC, int newC)
 {
 	    // Base cases
@@ -79,6 +99,9 @@ void MatrixDraw::FloodFillRecur(int x, int y, int prevC, int newC)
 void MatrixDraw::Fill(int x, int y, int color)
 {
 	int prevC = GetValueAt(x, y);
+	if(prevC == color)
+		return;
+	
 	FloodFillRecur(x,y, prevC, color);
 }
 
