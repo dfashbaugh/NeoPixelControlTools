@@ -91,9 +91,9 @@ void TestBilinear()
 	MatrixDraw draw(20,20);
 	draw.Bilinear(0, 0, 20, 20, 0.2, .10,0,0);
 	DrawMatrixByNumbers(draw);
-	cout << endl;
 
-}
+	cout << "Test Biliner: Visual Inspection" << endl;
+}	
 
 void TestFloodFillFailureCase()
 {
