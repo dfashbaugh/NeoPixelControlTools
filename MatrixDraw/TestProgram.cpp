@@ -89,10 +89,10 @@ void DrawMatrixByNumbers(MatrixDraw &draw)
 void TestBilinear()
 {
 	MatrixDraw draw(20,20);
-	draw.SetPixelAt(1,1, 10);
-	draw.SetPixelAt(10, 10, 100);
-	draw.Bilinear(10, 7, 20, 10, 0.2, 0.5, 0.8, 0.2);
+	draw.Bilinear(0, 0, 20, 20, 0.2, .10,0,0);
 	DrawMatrixByNumbers(draw);
+	cout << endl;
+
 }
 
 void TestFloodFillFailureCase()
