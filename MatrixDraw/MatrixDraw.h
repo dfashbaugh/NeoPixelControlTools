@@ -17,11 +17,13 @@ public:
 	void DrawCircle(int r, int cX, int cY, int color);
 	void DrawRectangle(int x1, int y1, int x2, int y2, int color);
 	void Fill(int x, int y, int color);
+	void Bilinear(int x1, int y1, int x2, int y2);
 
 	void ClearMatrix();
 private:
 
 	void FloodFillRecur(int x, int y, int prevC, int newC);
+	int BilinearInterpolation(int q11, int q12, int q21, int q22, int x1, int x2, int y1, int y2, int x, int y);
 
 	int xSize;
 	int ySize;
