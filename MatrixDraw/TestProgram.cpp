@@ -91,7 +91,7 @@ void TestBilinear()
 	MatrixDraw draw(20,20);
 	draw.SetPixelAt(1,1, 10);
 	draw.SetPixelAt(10, 10, 100);
-	draw.Bilinear(1, 1, 10, 10);
+	draw.Bilinear(10, 7, 20, 10, 0.2, 0.5, 0.8, 0.2);
 	DrawMatrixByNumbers(draw);
 }
 

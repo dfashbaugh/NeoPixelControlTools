@@ -105,16 +105,17 @@ void MatrixDraw::Fill(int x, int y, int color)
 	FloodFillRecur(x,y, prevC, color);
 }
 
-int MatrixDraw::BilinearInterpolation(int q11, int q12, int q21, int q22, int x1, int x2, int y1, int y2, int x, int y) 
+float MatrixDraw::BilinearInterpolation(float q11, float q12, float q21, float q22, int x1, int x2, int y1, int y2, int x, int y) 
 {
-    int x2x1, y2y1, x2x, y2y, yy1, xx1;
+    float x2x1, y2y1, x2x, y2y, yy1, xx1;
     x2x1 = x2 - x1;
     y2y1 = y2 - y1;
     x2x = x2 - x;
     y2y = y2 - y;
     yy1 = y - y1;
     xx1 = x - x1;
-    return 255 / (x2x1 * y2y1) * (
+
+    return 1.0 / (float)(x2x1 * y2y1) * (
         q11 * x2x * y2y +
         q21 * xx1 * y2y +
         q12 * x2x * yy1 +
@@ -122,21 +123,24 @@ int MatrixDraw::BilinearInterpolation(int q11, int q12, int q21, int q22, int x1
     );
 }
 
-void MatrixDraw::Bilinear(int x1, int y1, int x2, int y2)
+
+void MatrixDraw::Bilinear(int x1, int y1, int x2, int y2, float q11, float q12, float q21, float q22)
 {
-	int q11 = GetValueAt(x1,y1);
-	int q12 = GetValueAt(x1,y2);
-	int q21 = GetValueAt(x2, y1);
-	int q22 = GetValueAt(x2, y2);
 
 	for(int y = 0; y < ySize; y++)
 	{
 		for(int x = 0; x < xSize; x++)
 		{
-			int value = BilinearInterpolation(q11,q12,q21,q22,x1,x2,y1,y2,x,y)%255;
-			if(value < 0) 
-				value = value*-1;
-			SetPixelAt(x,y,value);
+			float value = BilinearInterpolation(q11,q12,q21,q22,x1,x2,y1,y2,x,y);
+			int newVal = value*255;
+			if(newVal > 255)
+				newVal = 255 + (255 - newVal);
+			if(newVal < 0)
+				newVal = newVal*-1;
+
+			newVal = newVal%256;
+
+			SetPixelAt(x,y,newVal);
 		}
 	}
 }
