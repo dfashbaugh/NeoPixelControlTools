@@ -105,6 +105,46 @@ void MatrixDraw::Fill(int x, int y, int color)
 	FloodFillRecur(x,y, prevC, color);
 }
 
+float MatrixDraw::BilinearInterpolation(float q11, float q12, float q21, float q22, int x1, int x2, int y1, int y2, int x, int y) 
+{
+    float x2x1, y2y1, x2x, y2y, yy1, xx1;
+    x2x1 = x2 - x1;
+    y2y1 = y2 - y1;
+    x2x = x2 - x;
+    y2y = y2 - y;
+    yy1 = y - y1;
+    xx1 = x - x1;
+
+    return 1.0 / (float)(x2x1 * y2y1) * (
+        q11 * x2x * y2y +
+        q21 * xx1 * y2y +
+        q12 * x2x * yy1 +
+        q22 * xx1 * yy1
+    );
+}
+
+
+void MatrixDraw::Bilinear(int x1, int y1, int x2, int y2, float q11, float q12, float q21, float q22)
+{
+
+	for(int y = 0; y < ySize; y++)
+	{
+		for(int x = 0; x < xSize; x++)
+		{
+			float value = BilinearInterpolation(q11,q12,q21,q22,x1,x2,y1,y2,x,y);
+			int newVal = value*255;
+			if(newVal > 255)
+				newVal = 255 + (255 - newVal);
+			if(newVal < 0)
+				newVal = newVal*-1;
+
+			newVal = newVal%256;
+
+			SetPixelAt(x,y,newVal);
+		}
+	}
+}
+
 void MatrixDraw::ClearMatrix()
 {
 	for(int x = 0; x < xSize; x++)

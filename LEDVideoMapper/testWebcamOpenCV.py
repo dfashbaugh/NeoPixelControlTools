@@ -117,7 +117,7 @@ def PrintArduinoCode(XYMatrix) :
 captureVideo = 0
 fileName = 'LEDpositions.csv'
 
-binByPercentage = 0 #Keep aspect ratio
+binByPercentage = 1 #Keep aspect ratio
 percentBin = 0.1
 newX = 10  # X and Y size of the array that the pixels will be held in
 newY = 20  
