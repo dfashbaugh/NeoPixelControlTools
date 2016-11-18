@@ -63,6 +63,38 @@ void DrawMatrix(MatrixDraw &draw)
 	}
 }
 
+void DrawMatrixByNumbers(MatrixDraw &draw)
+{
+	for(int y = 0; y < draw.GetMatrixYSize(); y++)
+	{
+		for(int x = 0; x < draw.GetMatrixXSize(); x++)
+		{
+			if(draw.GetValueAt(x,y) < 10)
+			{
+				cout << "   " << draw.GetValueAt(x,y);
+			}
+			else if(draw.GetValueAt(x,y) < 100)
+			{
+				cout << "  " << draw.GetValueAt(x,y);
+			}
+			else
+			{
+				cout << " " << draw.GetValueAt(x,y);
+			}
+		}
+		cout << endl;
+	}
+}
+
+void TestBilinear()
+{
+	MatrixDraw draw(20,20);
+	draw.SetPixelAt(1,1, 10);
+	draw.SetPixelAt(10, 10, 100);
+	draw.Bilinear(1, 1, 10, 10);
+	DrawMatrixByNumbers(draw);
+}
+
 void TestFloodFillFailureCase()
 {
 	std::string testName = "Test Flood Fill Failure";
@@ -238,6 +270,7 @@ int main(void)
 	TestFillCircle();
 	TestRectangleDraw();
 	TestFloodFillFailureCase();
+	TestBilinear();
 
 	return 0;
 }

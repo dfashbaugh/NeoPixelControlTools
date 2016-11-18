@@ -133,7 +133,10 @@ void MatrixDraw::Bilinear(int x1, int y1, int x2, int y2)
 	{
 		for(int x = 0; x < xSize; x++)
 		{
-			SetPixelAt(x,y, BilinearInterpolation(q11,q12,q21,q22,x1,x2,y1,y2,x,y));
+			int value = BilinearInterpolation(q11,q12,q21,q22,x1,x2,y1,y2,x,y)%255;
+			if(value < 0) 
+				value = value*-1;
+			SetPixelAt(x,y,value);
 		}
 	}
 }
