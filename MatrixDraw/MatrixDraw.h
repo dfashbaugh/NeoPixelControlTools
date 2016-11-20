@@ -20,6 +20,8 @@ public:
 	void Fill(int x, int y, int color);
 	void Bilinear(int x1, int y1, int x2, int y2, float q11, float q12, float q21, float q22);
 
+	void MeanFilter(int kernel);
+
 	void ClearMatrix();
 private:
 
