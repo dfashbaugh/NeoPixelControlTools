@@ -5,6 +5,7 @@ public:
 
 	MatrixDraw();
 	MatrixDraw(int xAxis, int yAxis);
+	MatrixDraw(int xAxis, int yAxis, int largestFilterWindow);
 	~MatrixDraw();
 
 	int GetMatrixYSize() {return ySize; };
@@ -27,6 +28,9 @@ private:
 
 	int xSize;
 	int ySize;
+	int maxFilterWindow;
 	int **Canvas;
+	int **OutputCanvas;
+	int **FilterWindow;
 
 };

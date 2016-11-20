@@ -15,6 +15,24 @@ MatrixDraw::MatrixDraw(int xAxis, int yAxis)
 	    Canvas[i] = new int[yAxis];
 }
 
+MatrixDraw::MatrixDraw(int xAxis, int yAxis, int largestFilterWindow)
+	: xSize(xAxis)
+	, ySize(yAxis)
+	, maxFilterWindow(largestFilterWindow)
+{
+	Canvas = new int*[xAxis];
+	for (int i = 0; i < xAxis; ++i)
+	    Canvas[i] = new int[yAxis];
+
+	OutputCanvas = new int*[xAxis];
+	for (int i = 0; i < xAxis; ++i)
+	    OutputCanvas[i] = new int[yAxis];
+
+	FilterWindow = new int*[largestFilterWindow];
+	for (int i = 0; i < largestFilterWindow; ++i)
+	    FilterWindow[i] = new int[largestFilterWindow];
+}
+
 MatrixDraw::~MatrixDraw()
 {
 
