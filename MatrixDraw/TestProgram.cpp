@@ -86,6 +86,17 @@ void DrawMatrixByNumbers(MatrixDraw &draw)
 	}
 }
 
+void TestMean()
+{
+	MatrixDraw draw(20, 20, 9);
+	draw.DrawRectangle(8,1, 18, 10, 255);
+	draw.Fill(9, 5, 255);
+	draw.MeanFilter(9);
+	DrawMatrixByNumbers(draw);
+
+	cout << "Test Mean Filter: Visual Inspection" << endl;
+}	
+
 void TestBilinear()
 {
 	MatrixDraw draw(20,20);
@@ -271,6 +282,7 @@ int main(void)
 	TestRectangleDraw();
 	TestFloodFillFailureCase();
 	TestBilinear();
+	TestMean();
 
 	return 0;
 }

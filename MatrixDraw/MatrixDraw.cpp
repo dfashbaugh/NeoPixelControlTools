@@ -9,10 +9,30 @@ MatrixDraw::MatrixDraw()
 MatrixDraw::MatrixDraw(int xAxis, int yAxis)
 	: xSize(xAxis)
 	, ySize(yAxis)
+	, filtersEnabled(0)
 {
 	Canvas = new int*[xAxis];
 	for (int i = 0; i < xAxis; ++i)
 	    Canvas[i] = new int[yAxis];
+}
+
+MatrixDraw::MatrixDraw(int xAxis, int yAxis, int largestFilterWindow)
+	: xSize(xAxis)
+	, ySize(yAxis)
+	, maxFilterWindow(largestFilterWindow)
+	, filtersEnabled(1)
+{
+	Canvas = new int*[xAxis];
+	for (int i = 0; i < xAxis; ++i)
+	    Canvas[i] = new int[yAxis];
+
+	OutputCanvas = new int*[xAxis];
+	for (int i = 0; i < xAxis; ++i)
+	    OutputCanvas[i] = new int[yAxis];
+
+	FilterWindow = new int*[largestFilterWindow];
+	for (int i = 0; i < largestFilterWindow; ++i)
+	    FilterWindow[i] = new int[largestFilterWindow];
 }
 
 MatrixDraw::~MatrixDraw()
@@ -141,6 +161,42 @@ void MatrixDraw::Bilinear(int x1, int y1, int x2, int y2, float q11, float q12, 
 			newVal = newVal%256;
 
 			SetPixelAt(x,y,newVal);
+		}
+	}
+}
+
+void MatrixDraw::MeanFilter(int kernel)
+{
+	if(kernel % 2 == 0)
+		return;
+
+	int filterDivisor = kernel*kernel;
+
+	for(int x = 0; x < xSize; x++)
+	{
+		for(int y = 0; y < ySize; y++)
+		{
+			int sum = 0;
+			for(int xx = 0; xx < kernel; xx++)
+			{
+				for(int yy = 0; yy < kernel; yy++)
+				{
+					int curX = x + (kernel / -2) + xx;
+					int curY = y + (kernel / -2) + yy;
+
+					if(curX > 0 && curX < xSize && curY > 0 && curY < ySize)
+						sum += Canvas[curX][curY];
+				}
+			}
+			OutputCanvas[x][y] = sum / filterDivisor;
+		}
+	}
+
+	for(int x = 0; x < xSize; x++)
+	{
+		for(int y = 0; y < ySize; y++)
+		{
+			Canvas[x][y] = OutputCanvas[x][y];
 		}
 	}
 }
