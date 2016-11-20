@@ -26,6 +26,7 @@ private:
 	void FloodFillRecur(int x, int y, int prevC, int newC);
 	float BilinearInterpolation(float q11, float q12, float q21, float q22, int x1, int x2, int y1, int y2, int x, int y);
 
+	int filtersEnabled;
 	int xSize;
 	int ySize;
 	int maxFilterWindow;
