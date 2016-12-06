@@ -114,25 +114,25 @@ def PrintArduinoCode(XYMatrix) :
 
 	writeFile.close()
 
-captureVideo = 0
+captureVideo = 1
 fileName = 'LEDpositions.csv'
 
-binByPercentage = 1 #Keep aspect ratio
+binByPercentage = 0 #Keep aspect ratio
 percentBin = 0.1
-newX = 10  # X and Y size of the array that the pixels will be held in
-newY = 20  
-NumLEDS = 480
+newX = 16  # X and Y size of the array that the pixels will be held in
+newY = 16  
+NumLEDS = 255
 
 if captureVideo :
 
-	ser = serial.Serial('/dev/tty.usbmodem1699411', 9600)
+	ser = serial.Serial('/dev/tty.usbmodem1668021', 9600)
 	# while 1 :
 		# for x in range(0, 85) :
 		# 	ser.write(str(x).encode())
 		# 	sleep(1)
 		# 	ser.flush()
 
-	cap = cv2.VideoCapture(2)
+	cap = cv2.VideoCapture(1)
 	cap.set(21, 0)
 
 	ret, frame = cap.read()
@@ -150,7 +150,7 @@ if captureVideo :
 	    sleep(0.1)
 
 	    tempList = []
-	    for j in range(0, 2) :
+	    for j in range(0, 5) :
 
 		    ret, frame = cap.read()
 
@@ -191,11 +191,11 @@ if captureVideo :
 			    	(x,y),radius = cv2.minEnclosingCircle(finalContours[0])
 			    	center = (int(x),int(y))
 			    	radius = int(radius)
-			    	cv2.circle(frame,center,radius,(0,0,255),2)
+			    	cv2.circle(frame,center,radius,(0,0,255),8)
 			    	#print 'Contours: ' + str(count) + ' X: ' + str(x) + ' Y: ' + str(y) + ' W: ' + str(w) + ' H: ' + str(h) + ' Area: ' + str(cv2.contourArea(finalContours[0]))
 			    	tempList.append( (i, x, y) )
 
-			cv2.drawContours(frame, finalContours, -1, (0,255,0), 3)
+			cv2.drawContours(frame, finalContours, -1, (255,0,0), 20)
 
 		    #cv2.drawContours(thresh1, contours, -1, 255, 3)
 
