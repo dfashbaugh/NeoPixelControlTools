@@ -1,5 +1,6 @@
 #include <iostream>
 #include "DefaultPatterns.h"
+#include "DefaultMappings.h"
 
 using namespace std;
 
