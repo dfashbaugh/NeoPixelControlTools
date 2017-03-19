@@ -9,4 +9,5 @@ public:
 	virtual ~Pattern_Intf() = 0;
 
 	virtual Color RunPattern(int ledNum, int Frame, PatColors Colors) = 0;
+	virtual int GetIDNumber() = 0;
 };
