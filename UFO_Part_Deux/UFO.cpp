@@ -26,5 +26,6 @@ void UFO::FillDefaultPatterns()
 
 void UFO::FillDefaultMappings()
 {
-	
+	Mapping_Intf* ForwardMapping = new ForwardMap();
+	Mappings[ForwardMapping->GetIDNumber()] = ForwardMapping;
 }
