@@ -9,6 +9,9 @@ int main(void)
 {
 	cout << "Begin Testing" << endl;
 
+	UFO myUFO;
+	myUFO.RunUFO();
+
 	return 0;
 }
 

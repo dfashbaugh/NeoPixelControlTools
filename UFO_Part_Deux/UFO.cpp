@@ -4,11 +4,14 @@
 
 #define UFO_START_FRAME 999999
 
+LED_Driver_Intf* LED_Driver;
+
 UFO::UFO()
 	: curFrame(UFO_START_FRAME)
 {
 	FillDefaultPatterns();
 	FillDefaultMappings();
+	LED_Driver = GetLEDDriver(numLEDs);
 }
 
 UFO::~UFO()
