@@ -9,6 +9,17 @@ public:
 
 	void RunUFO();
 
+	// Setters
+	void SetCurrentPattern		(int patternID) 		{curSettings.patternID = patternID; };
+	void SetCurrentMapping		(int mappingID)			{curSettings.mappingID = mappingID; };
+	void SetCurrentRate			(int rate)				{curSettings.rate = rate;};
+	void SetCurrentBrightness	(int brightness) 		{curSettings.brightness = brightness; };
+	void SetColors				(PatColors colors)		{curSettings.colors = colors; };
+	void SetAllCurrentSettings	(UFOSettings settings)	{curSettings = settings; };
+
+	// Getters
+	int GetCurrentPattern()		{return curSettings.patternID; };
+
 private:
 	UFOSettings curSettings;
 
