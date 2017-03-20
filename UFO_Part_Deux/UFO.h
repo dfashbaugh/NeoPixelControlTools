@@ -10,10 +10,13 @@ public:
 	void RunUFO();
 
 private:
+	UFOSettings curSettings;
+
 	unsigned long frame;	
 	Pattern_Intf* Patterns[80];
 	Mapping_Intf* Mappings[80];
 
 	void FillDefaultPatterns();
 	void FillDefaultMappings();
+	void SetDefaultSettings();
 };
