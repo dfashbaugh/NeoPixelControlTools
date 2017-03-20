@@ -28,7 +28,7 @@ public:
 private:
 	UFOSettings curSettings;
 
-	unsigned long frame;	
+	unsigned long curFrame;	
 	Pattern_Intf* Patterns[80];
 	Mapping_Intf* Mappings[80];
 
