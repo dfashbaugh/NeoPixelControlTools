@@ -1,4 +1,5 @@
 #include "UFO.h"
+#include "User_Options.h"
 
 #define UFO_START_FRAME 999999
 
