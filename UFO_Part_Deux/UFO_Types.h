@@ -20,6 +20,11 @@ struct PatColors
 
 struct UFOSettings
 {
+	UFOSettings() {rate = 1;
+				   brightness = 255;
+				   patternID = 1;
+				   mappingID = 1; };
+
 	int rate;
 	int brightness;
 	int patternID;

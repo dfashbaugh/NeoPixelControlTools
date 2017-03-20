@@ -18,5 +18,4 @@ private:
 
 	void FillDefaultPatterns();
 	void FillDefaultMappings();
-	void SetDefaultSettings();
 };
