@@ -24,7 +24,15 @@ UFO::~UFO()
 
 void UFO::RunUFO()
 {
+	curSettings = Comm_Interface->GetCommData();
 	curFrame += curSettings.rate;
+
+	for(int i = 0; i < numLEDs; i++)
+	{
+		int mappedLED = Mappings[curSettings.mappingID]->RunMapping(i, curFrame);
+		Color curLEDColor = Patterns[curSettings.patternID]->RunPattern(mappedLED, curFrame, curSettings.colors);
+		LED_Driver->SetLEDColor(i, curLEDColor);
+	}
 }
 
 void UFO::FillDefaultPatterns()
