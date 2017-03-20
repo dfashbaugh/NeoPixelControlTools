@@ -1,2 +1,2 @@
-ufoTestMake: UFO_Test.cpp
-	g++ UFO_Test.cpp -o Test_UFO.app
+ufoTestMake: UFO_Test.cpp UFO.cpp
+	g++ UFO_Test.cpp UFO.cpp -o Test_UFO.app
