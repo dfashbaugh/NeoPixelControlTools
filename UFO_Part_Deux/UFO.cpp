@@ -3,7 +3,7 @@
 #define UFO_START_FRAME 999999
 
 UFO::UFO()
-	: frame(UFO_START_FRAME)
+	: curFrame(UFO_START_FRAME)
 {
 	FillDefaultPatterns();
 	FillDefaultMappings();
@@ -16,7 +16,7 @@ UFO::~UFO()
 
 void UFO::RunUFO()
 {
-
+	curFrame += curSettings.rate;
 }
 
 void UFO::FillDefaultPatterns()
