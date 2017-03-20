@@ -1,3 +1,5 @@
+#ifndef ARDUINO
+
 #include <iostream>
 #include "UFO.h"
 
@@ -9,3 +11,5 @@ int main(void)
 
 	return 0;
 }
+
+#endif
