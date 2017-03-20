@@ -21,6 +21,7 @@ void UFO::RunUFO()
 void UFO::FillDefaultPatterns()
 {
 	Pattern_Intf* SolidColorPattern = new SolidColor();
+	Patterns[SolidColorPattern->GetIDNumber()] = SolidColorPattern;
 }
 
 void UFO::FillDefaultMappings()
