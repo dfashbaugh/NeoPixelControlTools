@@ -1,3 +1,5 @@
+#pragma once
+
 struct Color
 {
 	Color() {Red = 0; Green = 0; Blue = 0;};

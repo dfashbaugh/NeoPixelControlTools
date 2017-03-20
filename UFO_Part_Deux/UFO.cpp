@@ -1,5 +1,6 @@
 #include "UFO.h"
 #include "User_Options.h"
+#include "LED_Driver_Intf.h"
 
 #define UFO_START_FRAME 999999
 
