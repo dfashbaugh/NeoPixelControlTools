@@ -1,6 +1,5 @@
 #include <iostream>
-#include "DefaultPatterns.h"
-#include "DefaultMappings.h"
+#include "UFO.h"
 
 using namespace std;
 

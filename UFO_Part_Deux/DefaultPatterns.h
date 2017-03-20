@@ -1,8 +1,9 @@
 #include "Pattern_Intf.h"
 
 #define SOLID_COLOR_ID 1
-class SolidColor : Pattern_Intf 
+class SolidColor : public Pattern_Intf 
 {
+public:
 	SolidColor() {};
 	virtual ~SolidColor() {};
 	virtual Color RunPattern(int ledNum, int Frame, PatColors Colors) {return Colors.Color1;};
