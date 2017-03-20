@@ -18,7 +18,12 @@ public:
 	void SetAllCurrentSettings	(UFOSettings settings)	{curSettings = settings; };
 
 	// Getters
-	int GetCurrentPattern()		{return curSettings.patternID; };
+	int GetCurrentPattern()			{return curSettings.patternID; };
+	int GetCurrentMapping()			{return curSettings.mappingID; };
+	int GetCurrentRate()			{return curSettings.rate; };
+	int GetCurrentBrightness()		{return curSettings.brightness; };
+	PatColors GetCurrentColors()	{return curSettings.colors; };
+	UFOSettings GetCurrentSettings(){return curSettings; };
 
 private:
 	UFOSettings curSettings;
