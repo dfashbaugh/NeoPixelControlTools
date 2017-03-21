@@ -29,3 +29,20 @@ void DebugPrint(char* myString)
 /////// Control Functions //////////
 ///////////////////////////////////
 #include "UFO_Types.h"
+
+int lerp(int a, int b, float t) {
+  return a + (b - a)*t; 
+}
+
+Color Wheel(int WheelPos) {
+  WheelPos = 255 - WheelPos;
+  if(WheelPos < 85) {
+   return Color(255 - WheelPos * 3, 0, WheelPos * 3);
+  } else if(WheelPos < 170) {
+    WheelPos -= 85;
+   return Color(0, WheelPos * 3, 255 - WheelPos * 3);
+  } else {
+   WheelPos -= 170;
+   return Color(WheelPos * 3, 255 - WheelPos * 3, 0);
+  }
+}
