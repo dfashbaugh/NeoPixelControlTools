@@ -1,12 +1,12 @@
 #ifndef ARDUINO
-#define PC_DEBUG
+	#define PC_DEBUG
 #else
-#include <Arduino.h>
+	#include <Arduino.h>
 #endif
 
 #ifdef PC_DEBUG
-#include <iostream>
-using namespace std;
+	#include <iostream>
+	using namespace std;
 #endif
 
 void DebugPrint(char* myString)
