@@ -1,5 +1,4 @@
 #ifndef ARDUINO
-
 #include <iostream>
 #include "UFO.h"
 
