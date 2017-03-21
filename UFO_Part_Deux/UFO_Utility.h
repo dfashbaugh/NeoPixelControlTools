@@ -34,6 +34,12 @@ int lerp(int a, int b, float t) {
   return a + (b - a)*t; 
 }
 
+Color lerpColor(Color a, Color b, float t) {
+  return Color(lerp(a.Red, b.Red, t), 
+  lerp(a.Green, b.Green, t), 
+  lerp(a.Blue, b.Blue, t));
+}
+
 Color Wheel(int WheelPos) {
   WheelPos = 255 - WheelPos;
   if(WheelPos < 85) {
