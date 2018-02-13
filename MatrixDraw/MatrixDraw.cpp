@@ -52,9 +52,16 @@ void MatrixDraw::DrawLine(int x1, int y1, int x2, int y2, int color)
 		  		SetPixelAt(x, y, color);
 			}
 	}
-	else
+	else if (dx > 0)
 	{
 		for(int x = x1; x <= x2; x++){
+  			int y = y1 + dy * (x - x1) / dx;
+  			SetPixelAt(x, y, color);
+		}
+	}
+	else
+	{
+		for(int x = x1; x >= x2; x--){
   			int y = y1 + dy * (x - x1) / dx;
   			SetPixelAt(x, y, color);
 		}
@@ -143,6 +150,16 @@ float MatrixDraw::BilinearInterpolation(float q11, float q12, float q21, float q
     );
 }
 
+void MatrixDraw::DrawBezierCurve(int x1, int y1, int x2, int y2, int x3, int y3, int color)
+{
+	for(double t = 0; t < 1.0; t += 0.01)
+	{
+		int curX = (1-t)*(1-t)*x1 + 2*(1-t)*t*x2 + t*t*x3;
+		int curY = (1-t)*(1-t)*y1 + 2*(1-t)*t*y2 + t*t*y3;
+		SetPixelAt(curX, curY, color);
+	}
+	
+}
 
 void MatrixDraw::Bilinear(int x1, int y1, int x2, int y2, float q11, float q12, float q21, float q22)
 {

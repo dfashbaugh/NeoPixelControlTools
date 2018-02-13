@@ -1,6 +1,8 @@
-#include <iostream>
+	#include <iostream>
 #include "MatrixDraw.h"
 using namespace std;
+ #include <time.h>
+
 
 struct ExpectedValue
 {
@@ -285,6 +287,55 @@ void TestClearMatrix()
 	CheckResults(testName, valueList, 2);
 }
 
+void TestWindshieldWipers()
+{
+	MatrixDraw draw(20, 20);
+	for(int i = 0; i < 20; i++)
+	{
+		draw.DrawLine(10,0, i, 19, 2);
+		DrawMatrix(draw);
+		draw.ClearMatrix();
+		struct timespec ts;
+
+    	ts.tv_sec = 100 / 1000;
+    	ts.tv_nsec = (100 % 1000) * 1000000;
+    	nanosleep(&ts, NULL);
+		// sleep(10000);
+	}
+
+	for(int i = 19; i >= 0; i--)
+	{
+		draw.DrawLine(10,0, i, 19, 2);
+		DrawMatrix(draw);
+		draw.ClearMatrix();
+		struct timespec ts;
+
+    	ts.tv_sec = 100 / 1000;
+    	ts.tv_nsec = (100 % 1000) * 1000000;
+    	nanosleep(&ts, NULL);
+	}
+	
+	for(int i = 0; i < 20; i++)
+	{
+		draw.DrawLine(10,0, i, 19, 2);
+		DrawMatrix(draw);
+		draw.ClearMatrix();
+		struct timespec ts;
+
+    	ts.tv_sec = 100 / 1000;
+    	ts.tv_nsec = (100 % 1000) * 1000000;
+    	nanosleep(&ts, NULL);
+		// sleep(10000);
+	}
+}
+
+void TestCurves()
+{
+	MatrixDraw draw(20, 20);
+	draw.DrawBezierCurve(1,1, 10,15, 19,10, 1);
+	DrawMatrix(draw);
+}
+
 int main(void)
 {
 	cout << "Test Beginning" << endl;
@@ -300,6 +351,8 @@ int main(void)
 	TestBilinear();
 	TestMean();
 	TestRectDraw();
+	//TestWindshieldWipers();
+	TestCurves();
 
 	return 0;
 }

@@ -114,18 +114,44 @@ def PrintArduinoCode(XYMatrix) :
 
 	writeFile.close()
 
+def PrintLowMemArduinoCode(XYMatrix, minLED, maxLED) :
+	LEDLength = GetLongestLEDList(XYMatrix)
+	XLength = len(XYMatrix)
+	YLength = len(XYMatrix[0])
+
+	writeFile = open('MatrixMappingLowMem.h', 'w')
+	writeFile.write('int xSize = ' + str(XLength) + ';\n')
+	writeFile.write('int ySize = ' + str(YLength) + ';\n')
+	writeFile.write('int minLED = '+ str(minLED) + ';\n')
+	writeFile.write('int maxLED = '+ str(maxLED) + ';\n')
+
+	writeFile.write('LEDPos LEDMap [' + str( (maxLED-minLED) ) + '];\n')
+
+	for y in range(0, YLength) :
+		for x in range(0, XLength) :
+			for l in range(0, LEDLength) :
+				if len(XYMatrix[x][y]) <= l :
+					pass
+				else :
+					difference = XYMatrix[x][y][l] - minLED
+					print difference
+					writeFile.write('LEDMap[' + str( (XYMatrix[x][y][l] - minLED) ) + '].x = ' + str(x) + ';\n')
+					writeFile.write('LEDMap[' + str( (XYMatrix[x][y][l] - minLED) ) + '].y = ' + str(y) + ';\n')
+
+	writeFile.close()
+
 captureVideo = 1
 fileName = 'LEDpositions.csv'
 
-binByPercentage = 0 #Keep aspect ratio
+binByPercentage = 1 #Keep aspect ratio
 percentBin = 0.1
 newX = 16  # X and Y size of the array that the pixels will be held in
 newY = 16  
-NumLEDS = 255
+NumLEDS = 450
 
 if captureVideo :
 
-	ser = serial.Serial('/dev/tty.usbmodem1668021', 9600)
+	ser = serial.Serial('/dev/cu.usbmodem3250101', 9600)
 	# while 1 :
 		# for x in range(0, 85) :
 		# 	ser.write(str(x).encode())
@@ -139,12 +165,61 @@ if captureVideo :
 	# Our operations on the frame come here
 	grayFirst = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-	minContourSize = 1
-	maxContourSize = 300
+	minContourSize = 200
+	maxContourSize = 10000
 
 	posList = []
 
-	for i in range(0, NumLEDS) :
+	# FRONT RIGHT
+	# startLED = 1280
+	# endLED = 2153
+
+	# BACK RIGHT
+	# startLED = 6400
+	# endLED = 7076
+
+	#Back Right Arm
+	# startLED = 229
+	# endLED = 855
+
+	#Front Right Arm 1
+	# startLED = 0
+	# endLED = 228
+
+	#Front Right Arm 2
+	# startLED = 856
+	# endLED = 1244
+
+	# Front Left 
+	# startLED = 2560
+	# endLED = 3364
+
+	# Front Left Arm 1
+	# startLED = 3840
+	# endLED = 4093
+
+	# Front Left Arm 2
+	# startLED = 4682
+	# endLED = 5115
+
+	# Back Left Arm
+	# startLED = 4094
+	# endLED = 4681
+
+	# Back LEFT
+	# startLED = 5120
+	# endLED = 5963
+
+	# Shoulder Left
+	# startLED = 7680
+	# endLED = 8354
+
+	# Shoulder Right
+	startLED = 8960
+	endLED = 9615
+
+	# for i in range(0, NumLEDS) :
+	for i in range(startLED, endLED) :
 
 	    ser.write(str(i).encode() + str('\n'))
 	    sleep(0.1)
@@ -162,8 +237,9 @@ if captureVideo :
 		    #g = cv2.subtract(g, b)
 		    
 		    #ret,thresh1 = cv2.threshold(g,200,255,cv2.THRESH_BINARY)
-		    ret,thresh1 = cv2.threshold(r,230,255,cv2.THRESH_BINARY)
-
+		    # ret,thresh1 = cv2.threshold(r,230,255,cv2.THRESH_BINARY)
+		    ret,thresh1 = cv2.threshold(gray, 230,255, cv2.THRESH_BINARY)
+		    disp = thresh1.copy()
 
 
 		    #gray = gray - grayFirst
@@ -175,6 +251,7 @@ if captureVideo :
 		    finalContours = []
 		    for x in range(0, len(contours)) :
 		    	cnt = contours[x]
+		    	print cv2.contourArea(cnt)
 		    	if cv2.contourArea(cnt) > minContourSize and cv2.contourArea(cnt) < maxContourSize :
 		    		finalContours.append(cnt)
 		    		count = count + 1
@@ -211,8 +288,11 @@ if captureVideo :
 		    # Display the resulting frame
 		    #cv2.namedWindow('frame', cv2.WINDOW_NORMAL)
 		    
-		    small = cv2.resize(frame, (0,0), fx=0.5, fy=0.5) 
+		    # small = cv2.resize(frame, (0,0), fx=0.5, fy=0.5) 
+		    small = cv2.resize(frame, (0,0), fx=0.2, fy=0.2)
 		    cv2.imshow('frame',small)
+
+
 		    if cv2.waitKey(1) & 0xFF == ord('q'):
 		        break
 
@@ -347,5 +427,17 @@ else :
 
 PrintArduinoCode(XYMatrix)
 
+# Get Min Max LED Values
+minLED = 99999999
+maxLED = 0
 
+print "Min LED " + str(minLED) + "; Max LED " + str(maxLED)
+for x in range(0, len(adjustedPosList) ) :
+	if adjustedPosList[x][0] < minLED :
+		minLED = adjustedPosList[x][0]
+
+	if adjustedPosList[x][0] > maxLED :
+		maxLED = adjustedPosList[x][0]
+
+PrintLowMemArduinoCode(XYMatrix, minLED, maxLED)
 
