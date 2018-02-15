@@ -8,6 +8,6 @@ public:
 	Pattern_Intf() {};
 	virtual ~Pattern_Intf() {};
 
-	virtual Color RunPattern(int ledNum, int Frame, PatColors Colors) = 0;
+	virtual Color RunPattern(int ledNum, int Frame, PatColors Colors, int totalLEDs) = 0;
 	virtual int GetIDNumber() = 0;
 };

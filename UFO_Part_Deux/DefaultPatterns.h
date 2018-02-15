@@ -6,6 +6,22 @@ class SolidColor : public Pattern_Intf
 public:
 	SolidColor() {};
 	virtual ~SolidColor() {};
-	virtual Color RunPattern(int ledNum, int Frame, PatColors Colors) {return Colors.Color1;};
+	virtual Color RunPattern(int ledNum, int Frame, PatColors Colors, int totalLEDs) {return Colors.Color1;};
 	virtual int GetIDNumber() {return SOLID_COLOR_ID; };
 };
+
+#define STRIPE_ID 2
+class Stripe : public Pattern_Intf
+{
+public:
+	Stripe() {};
+	virtual ~Stripe() {};
+	virtual Color RunPattern(int ledNum, int Frame, PatColors Colors, int totalLEDs) {
+		int s = 6;
+		if( (ledNum + Frame)/s % s < s/2)
+			return Colors.Color1;
+		return Colors.Color2;
+	}
+	virtual int GetIDNumber() {return STRIPE_ID; };
+};
+

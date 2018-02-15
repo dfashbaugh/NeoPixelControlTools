@@ -28,7 +28,12 @@ void UFO::RunUFO()
 	for(int i = 0; i < LED_Driver->GetNumberOfLEDs(); i++)
 	{
 		int mappedLED = Mappings[curSettings.mappingID]->RunMapping(i, curFrame);
-		Color curLEDColor = Patterns[curSettings.patternID]->RunPattern(mappedLED, curFrame, curSettings.colors);
+		Color curLEDColor = Patterns[curSettings.patternID]->RunPattern(mappedLED, curFrame, curSettings.colors, LED_Driver->GetNumberOfLEDs());
+
+#ifndef ARDUINO
+		std::cout << "Cur LED: " << i << "; Cur ColorRGB: " << curLEDColor.Red << curLEDColor.Green << curLEDColor.Blue << std::endl;
+#endif
+
 		LED_Driver->SetLEDColor(i, curLEDColor);
 	}
 }
