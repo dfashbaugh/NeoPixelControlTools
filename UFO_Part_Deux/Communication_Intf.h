@@ -16,10 +16,5 @@ public:
 	Simulation_Communication() {};
 	virtual ~Simulation_Communication() {};
 
-	virtual UFOSettings GetCommData() {UFOSettings mySettings; return mySettings; };
+	virtual UFOSettings GetCommData() {UFOSettings mySettings; mySettings.colors.Color1.Red = 50; mySettings.patternID = STRIPE_ID; return mySettings; };
 };
-
-Communication_Intf* GetCommInterface()
-{
-	return new Simulation_Communication();
-}
