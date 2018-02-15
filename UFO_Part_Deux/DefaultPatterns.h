@@ -1,5 +1,7 @@
 #include "Pattern_Intf.h"
 
+#define USER_PATTERN_ID_START 20 // Use this for patterns that are non default. Add every time a new pattern is created.
+
 #define SOLID_COLOR_ID 1
 class SolidColor : public Pattern_Intf 
 {
