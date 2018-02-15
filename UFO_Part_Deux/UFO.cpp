@@ -42,6 +42,9 @@ void UFO::FillDefaultPatterns()
 {
 	Pattern_Intf* SolidColorPattern = new SolidColor();
 	Patterns[SolidColorPattern->GetIDNumber()] = SolidColorPattern;
+
+	Pattern_Intf* StripePattern = new Stripe();
+	Patterns[StripePattern->GetIDNumber()] = StripePattern;
 }
 
 void UFO::FillDefaultMappings()

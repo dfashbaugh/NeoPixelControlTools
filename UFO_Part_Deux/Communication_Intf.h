@@ -16,5 +16,5 @@ public:
 	Simulation_Communication() {};
 	virtual ~Simulation_Communication() {};
 
-	virtual UFOSettings GetCommData() {UFOSettings mySettings; mySettings.colors.Color1.Red = 50; return mySettings; };
+	virtual UFOSettings GetCommData() {UFOSettings mySettings; mySettings.colors.Color1.Red = 50; mySettings.patternID = STRIPE_ID; return mySettings; };
 };
