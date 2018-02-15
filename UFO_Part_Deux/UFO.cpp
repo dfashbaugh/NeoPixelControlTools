@@ -45,6 +45,9 @@ void UFO::FillDefaultPatterns()
 
 	Pattern_Intf* StripePattern = new Stripe();
 	Patterns[StripePattern->GetIDNumber()] = StripePattern;
+
+	Pattern_Intf* TotesRandomPattern = new TotesRandom();
+	Patterns[TotesRandomPattern->GetIDNumber()] = TotesRandomPattern;
 }
 
 void UFO::FillDefaultMappings()
