@@ -48,6 +48,9 @@ void UFO::FillDefaultPatterns()
 
 	Pattern_Intf* TotesRandomPattern = new TotesRandom();
 	Patterns[TotesRandomPattern->GetIDNumber()] = TotesRandomPattern;
+
+	Pattern_Intf* FlickerStrobe4Pattern = new FlickerStrobe4(LED_Driver->GetNumberOfLEDs());
+	Patterns[FlickerStrobe4Pattern->GetIDNumber()] = FlickerStrobe4Pattern;
 }
 
 void UFO::FillDefaultMappings()
