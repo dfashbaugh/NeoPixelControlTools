@@ -18,8 +18,3 @@ public:
 
 	virtual UFOSettings GetCommData() {UFOSettings mySettings; return mySettings; };
 };
-
-Communication_Intf* GetCommInterface()
-{
-	return new Simulation_Communication();
-}

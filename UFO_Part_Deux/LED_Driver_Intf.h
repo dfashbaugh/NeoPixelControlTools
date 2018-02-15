@@ -8,6 +8,7 @@ public:
 	virtual ~LED_Driver_Intf() {};
 
 	virtual void SetLEDColor(unsigned long LEDNum, Color LEDColor) = 0;
+	virtual unsigned long GetNumberOfLEDs() = 0;
 };
 
 class Simulation_LED_Driver : public LED_Driver_Intf
@@ -17,12 +18,8 @@ public:
 	virtual ~Simulation_LED_Driver() {};
 
 	virtual void SetLEDColor(unsigned long LEDNum, Color LEDColor) {};
+	virtual unsigned long GetNumberOfLEDs() {return NumberOfLEDs; };
 
 private:
 	unsigned long NumberOfLEDs;
 };
-
-LED_Driver_Intf* GetLEDDriver(unsigned long numLEDs)
-{
-	return new Simulation_LED_Driver(numLEDs);
-}
