@@ -36,6 +36,8 @@ void UFO::RunUFO()
 
 		LED_Driver->SetLEDColor(i, curLEDColor);
 	}
+
+	LED_Driver->Show();
 }
 
 void UFO::FillDefaultPatterns()
