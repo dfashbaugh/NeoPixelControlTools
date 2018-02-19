@@ -36,25 +36,32 @@ void UFO::RunUFO()
 
 		LED_Driver->SetLEDColor(i, curLEDColor);
 	}
+
+	LED_Driver->Show();
+}
+
+void UFO::SetPattern(Pattern_Intf* newPattern)
+{
+	Patterns[newPattern->GetIDNumber()] = newPattern;
+}
+
+void UFO::SetMapping(Mapping_Intf* newMapping)
+{
+	Mappings[newMapping->GetIDNumber()] = newMapping;
 }
 
 void UFO::FillDefaultPatterns()
 {
-	Pattern_Intf* SolidColorPattern = new SolidColor();
-	Patterns[SolidColorPattern->GetIDNumber()] = SolidColorPattern;
+	SetPattern(new SolidColor());
 
-	Pattern_Intf* StripePattern = new Stripe();
-	Patterns[StripePattern->GetIDNumber()] = StripePattern;
+	SetPattern(new Stripe());
 
-	Pattern_Intf* TotesRandomPattern = new TotesRandom();
-	Patterns[TotesRandomPattern->GetIDNumber()] = TotesRandomPattern;
+	SetPattern(new TotesRandom());
 
-	Pattern_Intf* FlickerStrobe4Pattern = new FlickerStrobe4(LED_Driver->GetNumberOfLEDs());
-	Patterns[FlickerStrobe4Pattern->GetIDNumber()] = FlickerStrobe4Pattern;
+	SetPattern(new FlickerStrobe4(LED_Driver->GetNumberOfLEDs()));
 }
 
 void UFO::FillDefaultMappings()
 {
-	Mapping_Intf* ForwardMapping = new ForwardMap();
-	Mappings[ForwardMapping->GetIDNumber()] = ForwardMapping;
+	SetMapping(new ForwardMap());
 }

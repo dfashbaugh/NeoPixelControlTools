@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #define RANDOM(maxVal) rand()%maxVal 
 #else
+#include <Arduino.h>
 #define RANDOM(maxVal) random(maxVal)
 #endif
 
