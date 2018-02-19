@@ -37,6 +37,9 @@ private:
 	Pattern_Intf* Patterns[80];
 	Mapping_Intf* Mappings[80];
 
+	void SetPattern(Pattern_Intf* newPattern);
+	void SetMapping(Mapping_Intf* newMapping);
+
 	void FillDefaultPatterns();
 	void FillDefaultMappings();
 };
