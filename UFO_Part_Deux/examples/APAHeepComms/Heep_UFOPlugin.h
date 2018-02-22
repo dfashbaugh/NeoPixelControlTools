@@ -2,6 +2,7 @@
 #include "UFO_Types.h"
 #include "Communication_Intf.h"
 #include "Heep_API.h"
+#include "UFO_Utility.h"
 
 UFOSettings mySettings;
 
