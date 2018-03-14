@@ -59,6 +59,8 @@ void UFO::FillDefaultPatterns()
 	SetPattern(new TotesRandom());
 
 	SetPattern(new FlickerStrobe4(LED_Driver->GetNumberOfLEDs()));
+
+	SetPattern(new Gradient());
 }
 
 void UFO::FillDefaultMappings()
