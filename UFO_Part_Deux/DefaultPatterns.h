@@ -1,4 +1,5 @@
 #include "Pattern_Intf.h"
+#include "UFO_Utility.h"
 
 #define USER_PATTERN_ID_START 20 // Use this for patterns that are non default. Add every time a new pattern is created.
 
@@ -74,5 +75,20 @@ private:
 	int selectLED2;
 	int selectLED3;
 	int selectLED4;
+};
+
+#define GRADIENT_ID 5
+class Gradient : public Pattern_Intf
+{
+public:
+	Gradient(){};
+	virtual ~Gradient() {};
+
+	virtual Color RunPattern(int ledNum, int frame, PatColors Colors, int totalLEDs){
+  		float r = 50;
+  		return lerpColor(Colors.Color1, Colors.Color2, ((ledNum + frame) % (int)r) / r);
+	};
+
+	virtual int GetIDNumber() {return GRADIENT_ID; };
 };
 
