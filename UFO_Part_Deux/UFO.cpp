@@ -6,10 +6,11 @@
 
 
 
-UFO::UFO(LED_Driver_Intf* _LED_Driver, Communication_Intf* _Comm_Interface)
+UFO::UFO(LED_Driver_Intf* _LED_Driver, Communication_Intf* _Comm_Interface, int _sideStripLength)
 	: curFrame(UFO_START_FRAME)
 	, LED_Driver(_LED_Driver)
 	, Comm_Interface(_Comm_Interface)
+	, sideStripLength(_sideStripLength)
 {
 	FillDefaultPatterns();
 	FillDefaultMappings();
@@ -27,7 +28,7 @@ void UFO::RunUFO()
 
 	for(int i = 0; i < LED_Driver->GetNumberOfLEDs(); i++)
 	{
-		int mappedLED = Mappings[curSettings.mappingID]->RunMapping(i, curFrame);
+		int mappedLED = Mappings[curSettings.mappingID]->RunMapping(i, curFrame, sideStripLength);
 		Color curLEDColor = Patterns[curSettings.patternID]->RunPattern(mappedLED, curFrame, curSettings.colors, LED_Driver->GetNumberOfLEDs());
 
 #ifndef ARDUINO
@@ -66,4 +67,8 @@ void UFO::FillDefaultPatterns()
 void UFO::FillDefaultMappings()
 {
 	SetMapping(new ForwardMap());
+
+	SetMapping(new HorizontalMap());
+
+	SetMapping(new VerticalMap());
 }
