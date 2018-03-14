@@ -6,11 +6,12 @@
 
 
 
-UFO::UFO(LED_Driver_Intf* _LED_Driver, Communication_Intf* _Comm_Interface, int _sideStripLength)
+UFO::UFO(LED_Driver_Intf* _LED_Driver, Communication_Intf* _Comm_Interface, unsigned long _minimumFrameTime, int _sideStripLength)
 	: curFrame(UFO_START_FRAME)
 	, LED_Driver(_LED_Driver)
 	, Comm_Interface(_Comm_Interface)
 	, sideStripLength(_sideStripLength)
+	, minimumFrameTime(_minimumFrameTime)
 {
 	FillDefaultPatterns();
 	FillDefaultMappings();
@@ -24,21 +25,27 @@ UFO::~UFO()
 void UFO::RunUFO()
 {
 	curSettings = Comm_Interface->GetCommData();
-	curFrame += curSettings.rate;
 
-	for(int i = 0; i < LED_Driver->GetNumberOfLEDs(); i++)
+	if(GetMilliseconds() - timeTracker > minimumFrameTime)
 	{
-		int mappedLED = Mappings[curSettings.mappingID]->RunMapping(i, curFrame, sideStripLength);
-		Color curLEDColor = Patterns[curSettings.patternID]->RunPattern(mappedLED, curFrame, curSettings.colors, LED_Driver->GetNumberOfLEDs());
+		timeTracker = GetMilliseconds();
+		curFrame += curSettings.rate;
+
+		for(int i = 0; i < LED_Driver->GetNumberOfLEDs(); i++)
+		{
+			int mappedLED = Mappings[curSettings.mappingID]->RunMapping(i, curFrame, sideStripLength);
+			Color curLEDColor = Patterns[curSettings.patternID]->RunPattern(mappedLED, curFrame, curSettings.colors, LED_Driver->GetNumberOfLEDs());
 
 #ifndef ARDUINO
-		std::cout << "Cur LED: " << i << "; Cur ColorRGB: " << curLEDColor.Red << curLEDColor.Green << curLEDColor.Blue << std::endl;
+			std::cout << "Cur LED: " << i << "; Cur ColorRGB: " << curLEDColor.Red << curLEDColor.Green << curLEDColor.Blue << std::endl;
 #endif
 
-		LED_Driver->SetLEDColor(i, curLEDColor);
-	}
+			LED_Driver->SetLEDColor(i, curLEDColor);
+		}
 
-	LED_Driver->Show();
+		LED_Driver->Show();
+	}
+	
 }
 
 void UFO::SetPattern(Pattern_Intf* newPattern)

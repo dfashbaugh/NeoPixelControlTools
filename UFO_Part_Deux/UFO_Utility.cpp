@@ -12,6 +12,13 @@ void DebugPrint(char* myString)
 }
 #endif
 
+#ifndef ARDUINO
+  unsigned long milliseconds = 0;
+  unsigned long GetMilliseconds() {return milliseconds++;};
+#else
+  unsigned long GetMilliseconds() {return millis();};
+#endif
+
 int lerp(int a, int b, float t) {
   return a + (b - a)*t; 
 }

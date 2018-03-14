@@ -6,8 +6,11 @@
 ////////////////////////////////
 #ifndef ARDUINO
 	#define PC_DEBUG
+	extern unsigned long milliseconds;
+	unsigned long GetMilliseconds();
 #else
 	#include <Arduino.h>
+	unsigned long GetMilliseconds();
 #endif
 
 #ifdef PC_DEBUG
