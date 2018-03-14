@@ -29,11 +29,11 @@ public:
 	VerticalMap() {};
 	virtual ~VerticalMap() {};
 	virtual int RunMapping(int ledNum, int Frame, int sideStripLength) {
-		int returnValue = ledNum % (sideStripLength+1);
+		int returnValue = ledNum % (sideStripLength);
 
-  		if( (ledNum / (sideStripLength + 1)) % 2)
+  		if( (ledNum / (sideStripLength)) % 2)
   		{
-    		returnValue = (sideStripLength + 1) - returnValue;
+    		returnValue = (sideStripLength - 1) - returnValue;
   		}
 
   		return returnValue;
