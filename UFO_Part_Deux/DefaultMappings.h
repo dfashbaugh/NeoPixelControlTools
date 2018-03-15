@@ -17,7 +17,7 @@ public:
 	HorizontalMap() {};
 	virtual ~HorizontalMap() {};
 	virtual int RunMapping(int ledNum, int Frame, int sideStripLength) {
-		return ledNum / (sideStripLength + 1);
+		return ledNum / (sideStripLength);
 	};
 	virtual int GetIDNumber() {return HORIZONTAL_ID; };
 };
