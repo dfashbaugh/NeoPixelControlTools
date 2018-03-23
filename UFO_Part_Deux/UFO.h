@@ -6,7 +6,7 @@
 class UFO 
 {
 public:
-	UFO(LED_Driver_Intf* _LED_Driver, Communication_Intf* _Comm_Interface);
+	UFO(LED_Driver_Intf* _LED_Driver, Communication_Intf* _Comm_Interface, unsigned long _minimumFrameTime = 30, int _sideStripLength = 1);
 	~UFO();
 
 	void RunUFO();
@@ -36,6 +36,11 @@ private:
 	unsigned long curFrame;	
 	Pattern_Intf* Patterns[80];
 	Mapping_Intf* Mappings[80];
+
+	int sideStripLength;
+
+	unsigned long minimumFrameTime;
+	unsigned long timeTracker;
 
 	void SetPattern(Pattern_Intf* newPattern);
 	void SetMapping(Mapping_Intf* newMapping);

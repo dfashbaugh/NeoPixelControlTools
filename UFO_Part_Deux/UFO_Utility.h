@@ -1,10 +1,16 @@
+#pragma once
+#include "UFO_Types.h"
+
 ////////////////////////////////
 ///// DEBUG PRINTING ///////////
 ////////////////////////////////
 #ifndef ARDUINO
 	#define PC_DEBUG
+	extern unsigned long milliseconds;
+	unsigned long GetMilliseconds();
 #else
 	#include <Arduino.h>
+	unsigned long GetMilliseconds();
 #endif
 
 #ifdef PC_DEBUG
@@ -14,15 +20,9 @@
 #endif
 
 #ifdef PC_DEBUG
-void DebugPrint(std::string myString)
-{
-	cout << myString << endl;
-}
+void DebugPrint(std::string myString);
 #else
-void DebugPrint(char* myString)
-{
-	Serial.println(myString);
-}
+void DebugPrint(char* myString);
 #endif
 
 ////////////////////////////////////
@@ -30,25 +30,6 @@ void DebugPrint(char* myString)
 ///////////////////////////////////
 #include "UFO_Types.h"
 
-int lerp(int a, int b, float t) {
-  return a + (b - a)*t; 
-}
-
-Color lerpColor(Color a, Color b, float t) {
-  return Color(lerp(a.Red, b.Red, t), 
-  lerp(a.Green, b.Green, t), 
-  lerp(a.Blue, b.Blue, t));
-}
-
-Color Wheel(int WheelPos) {
-  WheelPos = 255 - WheelPos;
-  if(WheelPos < 85) {
-   return Color(255 - WheelPos * 3, 0, WheelPos * 3);
-  } else if(WheelPos < 170) {
-    WheelPos -= 85;
-   return Color(0, WheelPos * 3, 255 - WheelPos * 3);
-  } else {
-   WheelPos -= 170;
-   return Color(WheelPos * 3, 255 - WheelPos * 3, 0);
-  }
-}
+int lerp(int a, int b, float t);
+Color lerpColor(Color a, Color b, float t);
+Color Wheel(int WheelPos);
