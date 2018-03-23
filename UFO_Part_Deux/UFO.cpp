@@ -69,6 +69,8 @@ void UFO::FillDefaultPatterns()
 	SetPattern(new FlickerStrobe4(LED_Driver->GetNumberOfLEDs()));
 
 	SetPattern(new Gradient());
+
+	SetPattern(new DripGradient());
 }
 
 void UFO::FillDefaultMappings()
