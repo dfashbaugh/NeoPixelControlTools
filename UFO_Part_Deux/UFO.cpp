@@ -4,6 +4,7 @@
 
 #define MAX_FRAME_NO 1000000000
 #define MIDDLE_FRAME_NO 10000000
+#define MIN_FRAME_NO 200
 
 UFO::UFO(LED_Driver_Intf* _LED_Driver, Communication_Intf* _Comm_Interface, unsigned long _minimumFrameTime, int _sideStripLength)
 	: curFrame(MIDDLE_FRAME_NO)
@@ -30,7 +31,7 @@ void UFO::RunUFO()
 		timeTracker = GetMilliseconds();
 		curFrame += curSettings.rate;
 
-		if(curFrame <= 0)
+		if(curFrame <= MIN_FRAME_NO)
 			curFrame = MIDDLE_FRAME_NO;
 		else if(curFrame >= MAX_FRAME_NO)
 			curFrame = MIDDLE_FRAME_NO;
