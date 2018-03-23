@@ -85,10 +85,32 @@ public:
 	virtual ~Gradient() {};
 
 	virtual Color RunPattern(int ledNum, int frame, PatColors Colors, int totalLEDs){
-  		float r = 50;
-  		return lerpColor(Colors.Color1, Colors.Color2, ((ledNum + frame) % (int)r) / r);
+  		int r = 50;
+  		if( ((ledNum + frame) / r) % 2 == 0)
+  		{
+  			return lerpColor(Colors.Color2, Colors.Color1, ((ledNum + frame) % r) / (float)r);
+  		}
+  		else
+  		{
+  			return lerpColor(Colors.Color1, Colors.Color2, ((ledNum + frame) % r) / (float)r);
+  		}	
 	};
 
 	virtual int GetIDNumber() {return GRADIENT_ID; };
+};
+
+#define DRIP_GRADIENT_ID 6
+class DripGradient : public Pattern_Intf
+{
+public:
+	DripGradient(){};
+	virtual ~DripGradient() {};
+
+	virtual Color RunPattern(int ledNum, int frame, PatColors Colors, int totalLEDs){
+  		int r = 50;
+  		return lerpColor(Colors.Color1, Colors.Color2, ((ledNum + frame) % r) / (float)r);
+	};
+
+	virtual int GetIDNumber() {return DRIP_GRADIENT_ID; };
 };
 
