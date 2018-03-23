@@ -2,12 +2,11 @@
 #include "UFO_Utility.h"
 #include "User_Options.h"
 
-#define UFO_START_FRAME 999999
-
-
+#define MAX_FRAME_NO 1000000000
+#define MIDDLE_FRAME_NO 10000000
 
 UFO::UFO(LED_Driver_Intf* _LED_Driver, Communication_Intf* _Comm_Interface, unsigned long _minimumFrameTime, int _sideStripLength)
-	: curFrame(UFO_START_FRAME)
+	: curFrame(MIDDLE_FRAME_NO)
 	, LED_Driver(_LED_Driver)
 	, Comm_Interface(_Comm_Interface)
 	, sideStripLength(_sideStripLength)
@@ -30,6 +29,11 @@ void UFO::RunUFO()
 	{
 		timeTracker = GetMilliseconds();
 		curFrame += curSettings.rate;
+
+		if(curFrame <= 0)
+			curFrame = MIDDLE_FRAME_NO;
+		else if(curFrame >= MAX_FRAME_NO)
+			curFrame = MIDDLE_FRAME_NO;
 
 		for(int i = 0; i < LED_Driver->GetNumberOfLEDs(); i++)
 		{
