@@ -114,3 +114,33 @@ public:
 	virtual int GetIDNumber() {return DRIP_GRADIENT_ID; };
 };
 
+#define RAINBOW_ID 7
+class Rainbow : public Pattern_Intf
+{
+public:
+	Rainbow(){};
+	virtual ~Rainbow() {};
+
+	virtual Color RunPattern(int ledNum, int frame, PatColors Colors, int totalLEDs){
+  		if (frame < 0) return Colors.Color1;
+  		return Wheel(frame % 255);
+	};
+
+	virtual int GetIDNumber() {return RAINBOW_ID; };
+};
+
+#define RAINBOW_CYCLE_ID 8
+class RainbowCycle : public Pattern_Intf
+{
+public:
+	RainbowCycle(){};
+	virtual ~RainbowCycle() {};
+
+	virtual Color RunPattern(int ledNum, int frame, PatColors Colors, int totalLEDs){
+  		if (frame < 0) return Colors.Color1;
+  		int j = frame % 255 * 5;			
+  		return Wheel((ledNum * 255 / totalLEDs + j));
+	};
+
+	virtual int GetIDNumber() {return RAINBOW_CYCLE_ID; };
+};

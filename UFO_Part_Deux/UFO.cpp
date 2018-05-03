@@ -76,6 +76,10 @@ void UFO::FillDefaultPatterns()
 	SetPattern(new Gradient());
 
 	SetPattern(new DripGradient());
+
+	SetPattern(new Rainbow());
+
+	SetPattern(new RainbowCycle());
 }
 
 void UFO::FillDefaultMappings()
